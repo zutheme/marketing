@@ -18,10 +18,10 @@
                 <div class="x_panel">
                   <div class="x_title">
                   	<div align="right">
-						<a class="btn btn-default btn-primary" href="{{ URL::route('admin.department.create') }}">Thêm mới</a>
+						<a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a>
 					</div>
                   <div class="x_title">
-                     @if($message = Session::get('success'))
+                     @if($message = Session::get('error'))
           			        	<h2 class="card-subtitle">{{ $message }}</h2>
           					@endif               
                   </div>
@@ -40,27 +40,33 @@
 	                <thead>
 	                    <tr>
 	                        <th>Tên bộ phận</th>
-							<th>Thuộc</th>
-							<th>-</th>
-							<th>-</th>
-	                    </tr>
-	                </thead>
-	                <tfoot>
-	                    <tr>
-	                        <th>Tên bộ phận</th>
-							<th>Thuộc</th>		
-							<th>-</th>
-							<th>-</th>
-	                    </tr>
+            							<th>Điện thoại</th>
+                          <th>Họ Tên</th>
+                          <th>Email</th>
+                          <th>Body</th>
+            							<th>-</th>
+            							<th>-</th>
+            	         </tr>
+            	     </thead>
+            	     <tfoot>
+            	      <tr>
+                          <th>Tên bộ phận</th>
+                          <th>Điện thoại</th>
+                          <th>Họ Tên</th>
+                          <th>Email</th>
+                          <th>Body</th>
+                          <th>-</th>
+                          <th>-</th>
+                       </tr>
 	                </tfoot>
 	                <tbody>
-	                	@foreach($departments as $row)
+	                	@foreach($customer_reg as $row)
       							<tr>
       								<td>{{ $row['namedepart'] }}</td>
       								<td>{{ $row['parent'] }}</td>			
-      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\DepartmentController@edit',$row['iddepart']) }}"><i class="fa fa-edit"></i></a></td>
+      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['iddepart']) }}"><i class="fa fa-edit"></i></a></td>
       								<td class="btn-control">
-      								     <form method="post" class="delete_form" action="{{action('Admin\DepartmentController@destroy', $row['iddepart'])}}">
+      								     <form method="post" class="delete_form" action="{{action('Admin\CustomerRegController@destroy', $row['iddepart'])}}">
       								      {{csrf_field()}}
       								      <input type="hidden" name="_method" value="DELETE" />
       								      <button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
