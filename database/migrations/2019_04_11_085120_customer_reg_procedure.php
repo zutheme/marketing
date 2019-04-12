@@ -28,10 +28,11 @@ class CustomerRegProcedure extends Migration
         END IF;
         IF ( _end_date IS NULL OR _end_date = "") THEN SET _end_date = _now_time;       
         END IF;
-        SELECT cus.mobile,cus.firstname,cus.email,user_reg.body FROM (SELECT imp.iduser_imp,po.body FROM (SELECT im.* FROM (SELECT * FROM impposts WHERE created_at >= _start_date AND  created_at < _end_date) AS im WHERE im.id_status_type=_id_status_type) AS imp JOIN
-        (SELECT pt.* FROM (SELECT p.* FROM (SELECT idpost,body,id_post_type,idcategory FROM posts WHERE created_at >= _start_date AND created_at < _end_date) AS p WHERE p.idcategory=_idcategory) AS pt WHERE pt.id_post_type=_id_post_type) AS po ON imp.idpost=po.idpost) AS user_reg JOIN
-        sv_customers AS cus ON user_reg.iduser_imp = cus.idcustomer;
-        END');
+        
+            SELECT user_reg.idimppost,user_reg.created_at,cus.mobile,cus.firstname,cus.email,user_reg.body FROM (SELECT imp.created_at,imp.idimppost,imp.iduser_imp,po.body FROM (SELECT im.* FROM (SELECT * FROM impposts WHERE created_at >= _start_date AND  created_at < _end_date) AS im WHERE im.id_status_type=_id_status_type) AS imp JOIN
+            (SELECT pt.* FROM (SELECT p.* FROM (SELECT idpost,body,id_post_type,idcategory FROM posts WHERE created_at >= _start_date AND created_at < _end_date) AS p WHERE p.idcategory=_idcategory) AS pt WHERE pt.id_post_type=_id_post_type) AS po ON imp.idpost=po.idpost) AS user_reg JOIN
+            sv_customers AS cus ON user_reg.iduser_imp = cus.idcustomer;
+            END');
     }
 
     /**
