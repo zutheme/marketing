@@ -12,7 +12,7 @@
 
                       <li><a href="{{ route('admin.adsvcustomer.index') }}">Khách hàng</a></li>
 
-                      <li><a href="{{ route('admin.svpost.index') }}">svpost</a></li>
+                      <li><a href="{{ route('admin.customerreg.index') }}">localhost</a></li>
 
                       <li><a href="#">Dashboard3</a></li>
 

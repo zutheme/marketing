@@ -8,9 +8,9 @@
       <link href="{{ asset('dashboard/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dashboard/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
     
-     <!-- Custom Theme Style -->
-    <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.2') }}" rel="stylesheet">
+      <!-- Custom Theme Style -->
+      <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.2') }}" rel="stylesheet">
 @stop
 
 @section('content')
@@ -39,22 +39,24 @@
                     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
 	                <thead>
 	                    <tr>
-	                        <th>Tên bộ phận</th>
+	                        <th>Ngày</th>
             							<th>Điện thoại</th>
                           <th>Họ Tên</th>
                           <th>Email</th>
                           <th>Body</th>
             							<th>-</th>
             							<th>-</th>
+                          <th>-</th>
             	         </tr>
             	     </thead>
             	     <tfoot>
             	      <tr>
-                          <th>Tên bộ phận</th>
+                          <th>Ngày</th>
                           <th>Điện thoại</th>
                           <th>Họ Tên</th>
                           <th>Email</th>
-                          <th>Body</th>
+                          <th>Nguồn</th>
+                          <th>-</th>
                           <th>-</th>
                           <th>-</th>
                        </tr>
@@ -62,11 +64,17 @@
 	                <tbody>
 	                	@foreach($customer_reg as $row)
       							<tr>
-      								<td>{{ $row['namedepart'] }}</td>
-      								<td>{{ $row['parent'] }}</td>			
-      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['iddepart']) }}"><i class="fa fa-edit"></i></a></td>
+                      <td>{{ $row['created_at'] }}</td>
+      								<td>{{ $row['mobile'] }}</td>
+      								<td>{{ $row['firstname'] }}</td>
+                      <td>{{ $row['email'] }}</td>
+                      <td>{{ $row['body'] }}</td>
+                      <td class="btn-control-action">
+                        <a class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
+                     </td>		
+      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['idimppost']) }}"><i class="fa fa-edit"></i></a></td>
       								<td class="btn-control">
-      								     <form method="post" class="delete_form" action="{{action('Admin\CustomerRegController@destroy', $row['iddepart'])}}">
+      								     <form method="post" class="delete_form" action="{{action('Admin\CustomerRegController@destroy', $row['idimppost'])}}">
       								      {{csrf_field()}}
       								      <input type="hidden" name="_method" value="DELETE" />
       								      <button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -79,6 +87,62 @@
           </div>
         </div>
       </div>
+</div>
+<div class="modal-cus">
+  <div class="modal-content-cus">
+      <span class="close">&times;</span>
+        <div class="x_content"> 
+        <form class="form-valide frm_post">
+            <div class="form-group row">
+                <label class="col-lg-2 col-form-label" for="val-username">Tiêu đề <span class="text-danger"></span></label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control title" name="title" placeholder="Tiêu đề">
+                </div>
+            </div>
+            <div class="form-group row">
+                  <label class="col-lg-2 col-form-label" for="val-username">Nội dung <span class="text-danger"></span></label>
+                  <div class="col-lg-10">
+                     <textarea name="body" rows="4" cols="50" class="form-control-text body" placeholder="Nội dung"></textarea>
+                  </div>
+              </div>
+            <div class="form-group row">
+                <label class="col-lg-2 col-form-label" for="val-username">Đường dẫn <span class="text-danger"></span></label>
+                <div class="col-lg-10">
+                  <input type="text" name="url" class="form-control url" placeholder="Đường dẫn">
+                </div>
+            </div>    
+            <div class="form-group row">
+                      <label class="col-lg-4 col-form-label" for="sel_idposttype">Kiểu post <span class="text-danger"></span></label>
+                      <div class="col-lg-8">
+                          <select class="form-control sel_idposttype" name="sel_idposttype">
+                            <option value="">Chọn kiểu post</option>
+                           {{--  @foreach($svposttypes as $row)
+                               <option value="{{ $row['id_post_type'] }}">{{ $row['name'] }}</option>
+                            @endforeach  --}}       
+                          </select>
+                      </div>
+                  </div>
+            <div class="form-group row">
+                      <label class="col-lg-4 col-form-label" for="sel_idcategory">Chuyên mục <span class="text-danger"></span></label>
+                      <div class="col-lg-8">
+                          <select class="form-control sel_idcategory" name="sel_idcategory">
+                            <option value="">Thuộc chuyên mục</option>
+                            {{-- @foreach($categories as $row)
+                               <option value="{{ $row['idcategory'] }}">{{ $row['namecat'] }}</option>
+                            @endforeach  --}}       
+                          </select>
+                      </div>
+                  </div>
+                     
+            <div class="form-group row">
+                <div class="col-lg-12 text-center">
+                    <button type="button" class="btn btn-primary btn-submit">Xác nhận</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+     </div>
 </div>
 @stop
 
@@ -103,4 +167,5 @@
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.0.4') }}"></script>
 @stop
