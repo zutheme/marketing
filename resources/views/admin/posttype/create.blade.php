@@ -26,6 +26,14 @@
 			{{ csrf_field() }}
 			<div class="form-group">
 				<input type="text" name="nametype" class="form-control" placeholder="Kiểu post">
+			</div>
+			<div class="form-group">
+				<select class="form-control cus-drop" name="sel_idcategory">
+                    	<option value="">Chọn chuyên mục</option>
+                    	@foreach($categories as $row)
+                    		 <option value="{{ $row['idcategory'] }}" <?php $row['idcategory'] == $posttype->idparent ? ' selected="selected"' : '';?>>{{ $row['namecat'] }}</option>
+						@endforeach        
+                </select>
 			</div>	
 			<div class="form-group">
 				<input type="submit" class="btn btn-default btn-submit" name="btn-submit" value="Xác nhận" />

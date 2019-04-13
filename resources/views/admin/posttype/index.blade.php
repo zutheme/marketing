@@ -30,6 +30,7 @@
 	                <thead>
 	                    <tr>
 	                        <th>Tên loại</th>
+	                        <th>Thuộc</th>
 							<th>-</th>
 							<th>-</th>
 	                    </tr>
@@ -37,6 +38,7 @@
 	                <tfoot>
 	                    <tr>
 	                       <th>Tên loại</th>
+	                       <th>Thuộc</th>
 	                       <th>-</th>
 						   <th>-</th>						
 	                    </tr>
@@ -44,7 +46,8 @@
 	                <tbody>
 	                	@foreach($posttypes as $row)
 							<tr>
-								<td>{{ $row['nametype'] }}</td>						
+								<td>{{ $row['nametype'] }}</td>
+								<td>{{ $row['idparent'] }}</td>						
 								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\PostTypeController@edit',$row['idposttype']) }}"><i class="fa fa-edit"></i></a></td>
 								<td class="btn-control">
 								     <form method="post" class="delete_form" action="{{action('Admin\PostTypeController@destroy', $row['idposttype'])}}">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PostType;
 use App\category;
+use App\CategoryType;
 use Illuminate\Support\Facades\DB;
 class PostTypeController extends Controller
 {
@@ -16,10 +17,11 @@ class PostTypeController extends Controller
      */
     public function index()
     {
+        //$rs_posttypes = DB::select('call ListCategoryByTypeProcedure()');
+        //$posttypes = json_decode(json_encode($rs_posttypes), true);
         $posttypes = PostType::all()->toArray();
         return view('admin.posttype.index',compact('posttypes'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +29,9 @@ class PostTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.posttype.create');
+        $rs_categories = DB::select('call ListAllCategoryProcedure()');
+        $categories = json_decode(json_encode($rs_categories), true);
+        return view('admin.posttype.create',compact('categories'));
     }
 
     /**
@@ -39,11 +43,8 @@ class PostTypeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,['nametype'=>'required']);
-
-        $posttype = new PostType(['nametype'=> $request->get('nametype')]);
-
+        $posttype = new PostType(['nametype'=> $request->get('nametype'),'idparent' => $request->get('sel_idcategory')]);
         $posttype->save();
-
         return redirect()->route('admin.posttype.index')->with('success','data added');
     }
 
@@ -64,11 +65,12 @@ class PostTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function edit($idposttype)
+    public function edit($idposttype)
     {
+        $rs_categories = DB::select('call ListAllCategoryProcedure()');
+        $categories = json_decode(json_encode($rs_categories), true);
         $posttype = PostType::find($idposttype);
-
-        return view('admin.posttype.edit',compact('posttype','idposttype'));
+        return view('admin.posttype.edit',compact('posttype','idposttype','categories'));
     }
 
     /**
@@ -84,6 +86,7 @@ class PostTypeController extends Controller
         //$idcustomer = $posttype->idcustomer;
         $posttype = PostType::find($idposttype);
         $posttype->nametype = $request->get('nametype');
+        $posttype->idparent = $request->get('sel_idcategory');
         $posttype->save();
 
         return redirect()->route('admin.posttype.index')->with('success','data update');
