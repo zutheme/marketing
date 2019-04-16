@@ -8,16 +8,23 @@
 
                   <li><a><i class="fa fa-home"></i> Quản lý khách hàng <span class="fa fa-chevron-down"></span></a>
 
-                    <ul class="nav child_menu">
+                    {{-- <ul class="nav child_menu">
 
                       <li><a href="{{ route('admin.adsvcustomer.index') }}">Khách hàng</a></li>
 
-                      <li><a href="{{ route('admin.customerreg.index') }}">localhost</a></li>
+                      <li><a href="{{ url('/admin/customerreg/3/2/1')}}">localhost</a></li>
 
                       <li><a href="#">Dashboard3</a></li>
 
-                    </ul>
-
+                    </ul> --}}
+                    @if($catbytypes)
+                      <ul class="nav child_menu">
+                      @foreach($catbytypes as $row)
+                        <li><a href="{{ url('/admin/customerreg/'.$row['idcategory'])}}">{{ $row['namecat'] }}</a></li>
+                      @endforeach
+                    </ul>    
+                    @endif               
+                    
                   </li>
 
                 </ul>

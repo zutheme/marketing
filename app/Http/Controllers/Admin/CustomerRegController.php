@@ -21,14 +21,17 @@ class CustomerRegController extends Controller
      */
     public function index() {
         try {
+            $_namecattype="website";
+            $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+            $catbytypes = json_decode(json_encode($rs_catbytype), true);
             $_start_date="";
             $_end_date="";
-            $_idcategory="3";
-            $_id_post_type="2";
+            $_idcategory="2";
+            $_id_post_type="3";
             $_id_status_type="1";
             $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
             $customer_reg = json_decode(json_encode($result), true);
-            return view('admin.customerreg.index',compact('customer_reg'));
+            return view('admin.customerreg.index',compact('customer_reg','catbytypes'));
         } catch (\Illuminate\Database\QueryException $ex) {
             $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
             return redirect()->route('admin.customerreg.index')->with('error',$errors);
@@ -99,5 +102,25 @@ class CustomerRegController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function ListCustomerByCat($_idcategory){
+        //$data['param'] = $param;
+        try {
+            $_namecattype="website";
+            $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+            $catbytypes = json_decode(json_encode($rs_catbytype), true);
+            $_start_date="";
+            $_end_date="";
+            //$request->get('namedepart')
+            $_id_post_type="3";
+            $_id_status_type="1";
+            $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
+            $customer_reg = json_decode(json_encode($result), true);
+            return view('admin.customerreg.index',compact('customer_reg','catbytypes'));
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+            return redirect()->route('admin.customerreg.index')->with('error',$errors);
+        }
+        return view('admin.customerreg.index',compact('customer_reg','data'));
     }
 }

@@ -17,8 +17,10 @@ class CreateImppostsTable extends Migration
             $table->bigIncrements('idimppost');
             $table->bigInteger('idpost')->nullable();
             $table->integer('id_status_type')->nullable();
-            $table->decimal('processing', 8, 2);
+            $table->decimal('percent_process', 8, 2)->nullable();
             $table->integer('iduser_imp')->nullable();
+            $table->integer('idemployee')->nullable();
+            $table->string('address_reg')->nullable();
             $table->integer('parent_idpost_imp')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));

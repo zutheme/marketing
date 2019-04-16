@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostTypesTable extends Migration
+class ListAllCategoryProcedure extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePostTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_types', function (Blueprint $table) {
-            $table->increments('idposttype');
-            $table->string('nametype');
-            $table->timestamps();
-        });
+        DB::unprepared('CREATE PROCEDURE ListAllCategoryProcedure()
+        BEGIN
+            SELECT idcategory,namecat,idparent FROM categories;
+            END');
     }
 
     /**
@@ -27,6 +26,6 @@ class CreatePostTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_types');
+        DB::unprepared('DROP PROCEDURE IF EXISTS ListAllCategoryProcedure');
     }
 }

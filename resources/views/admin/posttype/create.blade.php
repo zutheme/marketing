@@ -31,7 +31,7 @@
 				<select class="form-control cus-drop" name="sel_idcategory">
                     	<option value="">Chọn chuyên mục</option>
                     	@foreach($categories as $row)
-                    		 <option value="{{ $row['idcategory'] }}" <?php $row['idcategory'] == $posttype->idparent ? ' selected="selected"' : '';?>>{{ $row['namecat'] }}</option>
+                    		 <option value="{{ $row['idcategory'] }}">{{ $row['namecat'] }}</option>
 						@endforeach        
                 </select>
 			</div>	

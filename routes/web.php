@@ -123,7 +123,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::resource('admin/svposttype' , 'Admin\SvPostTypeController', array('as'=>'admin') );
 	//customer register
+	Route::get('admin/customerreg/{_idcategory}', ['uses' =>'Admin\CustomerRegController@ListCustomerByCat', 'as'=>'admin']);
 	Route::resource('admin/customerreg' , 'Admin\CustomerRegController', array('as'=>'admin') );
+
 	//post management
 
 	Route::get('admin/post/listcatbyidcat', 'Admin\CategoryController@listcatbyidcat');

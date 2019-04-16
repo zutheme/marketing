@@ -43,7 +43,8 @@
             							<th>Điện thoại</th>
                           <th>Họ Tên</th>
                           <th>Email</th>
-                          <th>Body</th>
+                          <th>Nguồn</th>
+                          <th>Chi nhánh</th>
             							<th>-</th>
             							<th>-</th>
                           <th>-</th>
@@ -56,6 +57,7 @@
                           <th>Họ Tên</th>
                           <th>Email</th>
                           <th>Nguồn</th>
+                          <th>Chi nhánh</th>
                           <th>-</th>
                           <th>-</th>
                           <th>-</th>
@@ -69,6 +71,7 @@
       								<td>{{ $row['firstname'] }}</td>
                       <td>{{ $row['email'] }}</td>
                       <td>{{ $row['body'] }}</td>
+                      <td>{{ $row['address_reg'] }}</td>
                       <td class="btn-control-action">
                         <a class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
                      </td>		
