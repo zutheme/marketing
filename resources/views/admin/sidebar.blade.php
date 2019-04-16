@@ -17,7 +17,7 @@
                       <li><a href="#">Dashboard3</a></li>
 
                     </ul> --}}
-                    @if($catbytypes)
+                    @if(isset($catbytypes))
                       <ul class="nav child_menu">
                       @foreach($catbytypes as $row)
                         <li><a href="{{ url('/admin/customerreg/'.$row['idcategory'])}}">{{ $row['namecat'] }}</a></li>

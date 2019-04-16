@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\CategoryType;
+use Illuminate\Support\Facades\DB;
 class CategoryTypeController extends Controller
 {
     /**
@@ -14,8 +15,11 @@ class CategoryTypeController extends Controller
      */
     public function index()
     {
+        $_namecattype="website";
+        $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+        $catbytypes = json_decode(json_encode($rs_catbytype), true);
         $cattypes = CategoryType::all()->toArray();
-        return view('admin.cattype.index',compact('cattypes'));
+        return view('admin.cattype.index',compact('cattypes','catbytypes'));
     }
 
     /**

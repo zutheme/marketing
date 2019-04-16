@@ -23,6 +23,9 @@ class AdsvcustomerController extends Controller
     {
 
         //$svcustomers = sv_customer::all()->toArray();
+        $_namecattype="website";
+        $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+        $catbytypes = json_decode(json_encode($rs_catbytype), true);
 
         $svposttypes = sv_post_type::all()->toArray();
 
@@ -40,7 +43,7 @@ class AdsvcustomerController extends Controller
 
         $svcustomers = json_decode(json_encode($result), true);
 
-        return view('admin.adsvcustomer.index',compact('svcustomers','svposttypes','categories'));
+        return view('admin.adsvcustomer.index',compact('svcustomers','svposttypes','categories','catbytypes'));
 
     }
 

@@ -18,8 +18,8 @@
                 <div class="x_panel">
                   <div class="x_title">
                   	<div align="right">
-						<a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a>
-					</div>
+          						<a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a>
+          					</div>
                   <div class="x_title">
                      @if($message = Session::get('error'))
           			        	<h2 class="card-subtitle">{{ $message }}</h2>
@@ -28,7 +28,16 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
-                      
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        @if(isset($post_types))
+                          <ul class="dropdown-menu" role="menu">
+                          @foreach($post_types as $row)
+                            <li><a href="{{ url('/admin/customerreg/'.$row['idposttype'])}}">{{ $row['nametype'] }}</a></li>
+                          @endforeach
+                        </ul>    
+                        @endif          
+                      </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
@@ -96,24 +105,14 @@
       <span class="close">&times;</span>
         <div class="x_content"> 
         <form class="form-valide frm_post">
-            <div class="form-group row">
-                <label class="col-lg-2 col-form-label" for="val-username">Tiêu đề <span class="text-danger"></span></label>
-                <div class="col-lg-10">
-                    <input type="text" class="form-control title" name="title" placeholder="Tiêu đề">
-                </div>
-            </div>
+            
             <div class="form-group row">
                   <label class="col-lg-2 col-form-label" for="val-username">Nội dung <span class="text-danger"></span></label>
                   <div class="col-lg-10">
                      <textarea name="body" rows="4" cols="50" class="form-control-text body" placeholder="Nội dung"></textarea>
                   </div>
               </div>
-            <div class="form-group row">
-                <label class="col-lg-2 col-form-label" for="val-username">Đường dẫn <span class="text-danger"></span></label>
-                <div class="col-lg-10">
-                  <input type="text" name="url" class="form-control url" placeholder="Đường dẫn">
-                </div>
-            </div>    
+              
             <div class="form-group row">
                       <label class="col-lg-4 col-form-label" for="sel_idposttype">Kiểu post <span class="text-danger"></span></label>
                       <div class="col-lg-8">
@@ -125,17 +124,7 @@
                           </select>
                       </div>
                   </div>
-            <div class="form-group row">
-                      <label class="col-lg-4 col-form-label" for="sel_idcategory">Chuyên mục <span class="text-danger"></span></label>
-                      <div class="col-lg-8">
-                          <select class="form-control sel_idcategory" name="sel_idcategory">
-                            <option value="">Thuộc chuyên mục</option>
-                            {{-- @foreach($categories as $row)
-                               <option value="{{ $row['idcategory'] }}">{{ $row['namecat'] }}</option>
-                            @endforeach  --}}       
-                          </select>
-                      </div>
-                  </div>
+            
                      
             <div class="form-group row">
                 <div class="col-lg-12 text-center">
