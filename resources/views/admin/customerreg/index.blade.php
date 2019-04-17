@@ -23,7 +23,7 @@
                   <div class="x_title">
                      @if($message = Session::get('error'))
           			        	<h2 class="card-subtitle">{{ $message }}</h2>
-          					@endif               
+          					@endif         
                   </div>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -33,7 +33,7 @@
                         @if(isset($post_types))
                           <ul class="dropdown-menu" role="menu">
                           @foreach($post_types as $row)
-                            <li><a href="{{ url('/admin/customerreg/'.$row['idposttype'])}}">{{ $row['nametype'] }}</a></li>
+                            <li><a href="{{ url('/admin/customerreg/'.Request::segment(3).'/'.$row['idposttype'].'/'.Request::segment(5))}}">{{ $row['nametype'] }}</a></li>
                           @endforeach
                         </ul>    
                         @endif          
@@ -82,6 +82,7 @@
                       <td>{{ $row['body'] }}</td>
                       <td>{{ $row['address_reg'] }}</td>
                       <td class="btn-control-action">
+                        <input type="hidden" name="idpost" value="{{ $row['idpost'] }}">
                         <a class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
                      </td>		
       								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['idimppost']) }}"><i class="fa fa-edit"></i></a></td>
@@ -107,25 +108,24 @@
         <form class="form-valide frm_post">
             
             <div class="form-group row">
-                  <label class="col-lg-2 col-form-label" for="val-username">Nội dung <span class="text-danger"></span></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-12 col-form-label" for="val-username">Nội dung <span class="text-danger"></span></label>
+                  <div class="col-lg-12">
                      <textarea name="body" rows="4" cols="50" class="form-control-text body" placeholder="Nội dung"></textarea>
                   </div>
-              </div>
+            </div>
               
             <div class="form-group row">
-                      <label class="col-lg-4 col-form-label" for="sel_idposttype">Kiểu post <span class="text-danger"></span></label>
-                      <div class="col-lg-8">
+                      <label class="col-lg-12 col-form-label" for="val-username">Tương tác<span class="text-danger"></span></label>
+                      <div class="col-lg-12">
+                         @if(isset($post_type_inter))
                           <select class="form-control sel_idposttype" name="sel_idposttype">
-                            <option value="">Chọn kiểu post</option>
-                           {{--  @foreach($svposttypes as $row)
-                               <option value="{{ $row['id_post_type'] }}">{{ $row['name'] }}</option>
-                            @endforeach  --}}       
-                          </select>
+                            <option value="">Chọn kiểu nội dung</option>
+                           @foreach($post_type_inter as $row)
+                               <option value="{{ $row['idposttype'] }}">{{ $row['nametype'] }}</option>
+                            @endforeach
+                          @endif
                       </div>
-                  </div>
-            
-                     
+            </div> 
             <div class="form-group row">
                 <div class="col-lg-12 text-center">
                     <button type="button" class="btn btn-primary btn-submit">Xác nhận</button>

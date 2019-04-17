@@ -123,7 +123,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::resource('admin/svposttype' , 'Admin\SvPostTypeController', array('as'=>'admin') );
 	//customer register
-	Route::get('admin/customerreg?idcategory={_idcategory}&id_post_type={_id_post_type}&id_status_type={_id_status_type}', ['uses' =>'Admin\CustomerRegController@ListCustomerByCat', 'as'=>'admin']);
+	Route::get('admin/customerreg/{_idcategory}/{_id_post_type}/{_id_status_type}', ['uses' =>'Admin\CustomerRegController@ListCustomerByCat', 'as'=>'admin']);
 	Route::resource('admin/customerreg' , 'Admin\CustomerRegController', array('as'=>'admin') );
 
 	//post management
@@ -141,31 +141,22 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('admin/statustype' , 'Admin\StatusTypeController', array('as'=>'admin') );
 
 	//upload file
-
 	Route::post('admin/upload' , 'Admin\UploadController@upload');
-
 	Route::get('admin/upload' , 'Admin\UploadController@upload');
-
 	Route::post('admin/uploadfile' , 'Admin\UploadController@uploadfile');
-
 	Route::get('admin/uploadfile' , 'Admin\UploadController@uploadfile');
 
 	//deparment
 
 	Route::get('admin/department/listdepartmentbyid', 'Admin\DepartmentController@listdepartmentbyid');
-
 	Route::post('admin/department/listdepartmentbyid', 'Admin\DepartmentController@listdepartmentbyid');
-
 	Route::resource('admin/department','Admin\DepartmentController', array('as'=>'admin'));
 
 	//grant permistion
 
 	Route::resource('admin/roles','Admin\RoleController', array('as'=>'admin'));
-
 	Route::resource('admin/permission','Admin\PermissionController', array('as'=>'admin'));
-
     Route::resource('admin/impperm','Admin\ImpPermController', array('as'=>'admin'));
-
     Route::resource('admin/grantperm','Admin\GrantController', array('as'=>'admin'));
 
     // Route::resource('products','ProductController');

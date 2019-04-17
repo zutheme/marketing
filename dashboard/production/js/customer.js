@@ -22,16 +22,13 @@ function makepost(){
   var _e_frm_reg = this.parentElement.parentElement.parentElement;
  //var e_title = _e_frm_reg.getElementsByClassName("title")[0];
   var _csrf_token = document.getElementsByName("csrf-token")[0].getAttribute("content");
-  var _title = _e_frm_reg.getElementsByClassName("title")[0].value;
   var _body = _e_frm_reg.getElementsByClassName("body")[0].value;
-  var _url = _e_frm_reg.getElementsByClassName("url")[0].value;
   var _sel_idposttype =  _e_frm_reg.getElementsByClassName("sel_idposttype")[0].value;
-  var _sel_idcategory = _e_frm_reg.getElementsByClassName("sel_idcategory")[0].value;
   var http = new XMLHttpRequest();
   var url = "svpost/makepost";
   //var obj = JSON.stringify({name:"John Rambo", email:_email});
   //var params = "action=hatazu_plug_register_customer&email="+obj;
-  var params = "title="+_title+"&body="+_body+"&url="+_url+"&sel_idposttype="+_sel_idposttype+"&sel_idcategory="+_sel_idcategory;
+  var params = "body="+_body+"&sel_idposttype="+_sel_idposttype;
 
   http.open("POST", url, true);
   http.setRequestHeader("X-CSRF-TOKEN", _csrf_token);

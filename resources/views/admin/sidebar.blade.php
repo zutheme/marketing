@@ -20,7 +20,7 @@
                     @if(isset($catbytypes))
                       <ul class="nav child_menu">
                       @foreach($catbytypes as $row)
-                        <li><a href="{{ url('/admin/customerreg/'.$row['idcategory'])}}">{{ $row['namecat'] }}</a></li>
+                        <li><a href="{{ url('/admin/customerreg/'.$row['idcategory'].'/2/1')}}">{{ $row['namecat'] }}</a></li>
                       @endforeach
                     </ul>    
                     @endif               
