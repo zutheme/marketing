@@ -115,17 +115,37 @@ class CustomerRegController extends Controller
             $_idinter = 4;
             $rs_post_type_inter = DB::select('call ListPostTypeByIdcatProcedure(?)',array($_idinter));
             $post_type_inter = json_decode(json_encode($rs_post_type_inter), true);
+            $_idparent_status = 0;
+            $rs_status_type = DB::select('call ListStatusTypeProcedure(?)',array($_idparent_status));
+            $status_types = json_decode(json_encode($rs_status_type), true);
             $_start_date="";
             $_end_date="";
             //$_idcategory = $request->get('idcategory');
             //$_idcategory = $request->input('idcategory');
             $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
             $customer_reg = json_decode(json_encode($result), true);
-            return view('admin.customerreg.index',compact('customer_reg','catbytypes','post_types','post_type_inter'));
+            return view('admin.customerreg.index',compact('customer_reg','catbytypes','post_types','post_type_inter','status_types'));
         } catch (\Illuminate\Database\QueryException $ex) {
-            $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+            $errors = new MessageBag(['errorsql' => $ex->getMessage()]);
             return redirect()->route('admin.customerreg.index')->with('error',$errors);
         }
         return view('admin.customerreg.index',compact('customer_reg','data'));
+    }
+    public function make_interactive(Request $request)
+    {
+        $parent_idpost = $request->get('idpost');
+        $body = $request->get('body');
+        $id_post_type = $request->get('sel_idposttype');
+        $id_status_type = $request->get('id_status_type');
+        try {
+            $result = DB::select('call customer_interactive_procedure(?,?,?,?)',array($parent_idpost,$body, $id_post_type,$id_status_type));
+            $cus_interactive = json_decode(json_encode($result), true);
+            $success = array('success'=>$cus_interactive);
+            return response()->json($success); 
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['errorsql' => $ex->getMessage()]);
+            return response()->json($errors);
+        }
+        return response()->json(array('error' =>'')); 
     }
 }

@@ -245,19 +245,27 @@ class SvPostController extends Controller
     }
 
     public function makepost(Request $request)
+
     {
-        $idpost = $request->get('idpost');
-        $body = $request->get('body');
-        $id_post_type = $request->get('sel_idposttype');    
-        try {
-            $result = DB::select('call customer_interactive_procedure(?,?,?)',array($idpost,$body, $id_post_type));
-            $cus_interactive = json_decode(json_encode($result), true);
-            return response()->json($success); 
-        } catch (\Illuminate\Database\QueryException $ex) {
-            $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
-            return response()->json($errors);
-        }
-        return response()->json(array('error' =>'')); 
+
+        $svpost = new sv_post;
+
+        $svpost->title = $request->get('title');
+
+        $svpost->body = $request->get('body');
+
+        $svpost->url = $request->get('url');
+
+        $svpost->id_post_type = $request->get('sel_idposttype');
+
+        $svpost->idcategory = $request->get('sel_idcategory');
+
+        $svpost->save();
+
+        $success['id_svpost'] =  $svpost->id_svpost;
+
+        return response()->json($success); 
+
     }
 }
 

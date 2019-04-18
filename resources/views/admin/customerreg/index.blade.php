@@ -82,8 +82,8 @@
                       <td>{{ $row['body'] }}</td>
                       <td>{{ $row['address_reg'] }}</td>
                       <td class="btn-control-action">
-                        <input type="hidden" name="idpost" value="{{ $row['idpost'] }}">
-                        <a class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
+                        <input type="hidden" name="idpost_row" value="{{ $row['idpost'] }}">
+                        <a onclick="popup_modal({{ $row['idpost'] }});" class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
                      </td>		
       								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['idimppost']) }}"><i class="fa fa-edit"></i></a></td>
       								<td class="btn-control">
@@ -112,29 +112,44 @@
                   <div class="col-lg-12">
                      <textarea name="body" rows="4" cols="50" class="form-control-text body" placeholder="Nội dung"></textarea>
                   </div>
+                  <input type="hidden" class="idpost" name="idpost" value="0">
             </div>
               
             <div class="form-group row">
-                      <label class="col-lg-12 col-form-label" for="val-username">Tương tác<span class="text-danger"></span></label>
-                      <div class="col-lg-12">
-                         @if(isset($post_type_inter))
-                          <select class="form-control sel_idposttype" name="sel_idposttype">
-                            <option value="">Chọn kiểu nội dung</option>
-                           @foreach($post_type_inter as $row)
-                               <option value="{{ $row['idposttype'] }}">{{ $row['nametype'] }}</option>
-                            @endforeach
-                          @endif
-                      </div>
-            </div> 
+                  <label class="col-lg-12 col-form-label" for="val-username">Tương tác<span class="text-danger"></span></label>
+                  <div class="col-lg-12">
+                     @if(isset($post_type_inter))
+                      <select class="form-control sel_idposttype" name="sel_idposttype">
+                        <option value="">Chọn kiểu nội dung</option>
+                       @foreach($post_type_inter as $row)
+                           <option value="{{ $row['idposttype'] }}">{{ $row['nametype'] }}</option>
+                        @endforeach
+                      </select>
+                      @endif
+                  </div>
+            </div>
             <div class="form-group row">
-                <div class="col-lg-12 text-center">
-                    <button type="button" class="btn btn-primary btn-submit">Xác nhận</button>
+                  {{-- <label class="col-lg-12 col-form-label" for="val-username">Trạng thái<span class="text-danger"></span></label> --}}
+                  <div class="col-lg-12">
+                     @if(isset($post_type_inter))
+                      <select class="form-control sel_idstatustype" name="sel_idstatustype">
+                        <option value="">Chọn kiểu trạng thái</option>
+                       @foreach($status_types as $row)
+                           <option value="{{ $row['id_status_type'] }}">{{ $row['name_status_type'] }}</option>
+                        @endforeach
+                      </select>
+                      @endif
+                  </div>
+            </div>  
+            <div class="form-group row">
+                <div class="col-lg-12 col-sm-12 text-center">
+                    <a class="btn btn-primary btn-submit">Xác nhận</a>
                 </div>
             </div>
 
         </form>
     </div>
-     </div>
+  </div>
 </div>
 @stop
 
@@ -159,5 +174,5 @@
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
-    <script src="{{ asset('dashboard/production/js/customer.js?v=0.0.4') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.1.1') }}"></script>
 @stop

@@ -18,7 +18,10 @@ class CreateExppostsTable extends Migration
             $table->bigInteger('idpost')->nullable();
             $table->integer('id_status_type')->nullable();
             $table->integer('iduser_exp')->nullable();
-            $table->decimal('processing', 8, 2);
+            $table->integer('idemployee')->nullable();
+            $table->string('address_reg')->nullable();
+            $table->decimal('percent_process', 8, 2)->nullable();
+            $table->integer('parent_idpost_exp')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });

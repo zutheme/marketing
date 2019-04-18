@@ -13,17 +13,13 @@ class ListPostTypeProcedure extends Migration
      */
     public function up()
     {
-        DB::unprepared('CREATE PROCEDURE ListPostTypeByIdcatProcedure(IN _idcat int)
+        DB::unprepared('CREATE PROCEDURE ListPostTypeProcedure(IN _idparent int)
         BEGIN
-        IF _idcat > 0 THEN
-        BEGIN
-           SELECT * FROM post_types WHERE idparent = _idcat;
-        END; 
-        ELSE
-        BEGIN
-           SELECT * FROM post_types;    
-        END;
-        END IF;
+        IF idparent > 0 THEN
+        SELECT id_status_type, name_status_type FROM ListStatusType WHERE idparent=_idparent;
+         ELSE
+        SELECT id_status_type, name_status_type FROM ListStatusType;
+         END IF;  
         END');
     }
 
@@ -34,6 +30,6 @@ class ListPostTypeProcedure extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP PROCEDURE IF EXISTS ListPostTypeByIdcatProcedure');
+        DB::unprepared('DROP PROCEDURE IF EXISTS ListPostTypeProcedure);
     }
 }
