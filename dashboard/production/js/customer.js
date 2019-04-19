@@ -26,25 +26,35 @@ function makepost(){
   var _sel_idposttype =  _e_frm_reg.getElementsByClassName("sel_idposttype")[0].value;
   var _sel_idstatustype =  _e_frm_reg.getElementsByClassName("sel_idstatustype")[0].value;
   var http = new XMLHttpRequest();
-  var url = "admin/customerreg/interactive";
+  var url = "/marketing/admin/customerreg/interactive";
   //var obj = JSON.stringify({name:"John Rambo", email:_email});
-  //var params = "action=hatazu_plug_register_customer&email="+obj;
   var params = "body="+_body+"&sel_idposttype="+_sel_idposttype+"&idpost="+_idpost+"&id_status_type="+_sel_idstatustype;
-  
+  console.log(params);
   http.open("POST", url, true);
   http.setRequestHeader("X-CSRF-TOKEN", _csrf_token);
   http.setRequestHeader("Accept", "application/json");
   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   var load = _e_frm_reg.getElementsByClassName("loading")[0];
-  //load.style.display = "block";
+  load.style.display = "block";
   http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
           //alert(http.responseText);
           var myArr = JSON.parse(this.responseText);
-          //console.log(myArr);//myArr.id_svpost
-          if(myArr.id_svpost){
-              e_modal_frm_action.style.display = "none";
-          }    
+          console.log(myArr);
+           Object.keys(myArr).forEach(function(key) {      
+            if(key=='success'){
+               _e_frm_reg.getElementsByClassName('idpost')[0].value = "";
+                _e_frm_reg.getElementsByClassName('body')[0].value = "";
+                //_e_frm_reg.getElementsByClassName("result")[0].innerHTML = "Cảm ơn bạn "+myArr[key][0].id_exppost+"";
+                _e_frm_reg.getElementsByClassName("result")[0].innerHTML = "success";
+                setTimeout(function(){
+                   e_modal_frm_action.style.display = "none";
+                },3000);  
+            }else if(key=='error'){
+              _e_frm_reg.getElementsByClassName("result")[0].innerHTML = myArr.error;
+            }
+          });
+          load.style.display = "none";    
       }
   }
   http.send(params);
@@ -76,3 +86,8 @@ function makepost(){
 //             });
 //         });
 // });
+$(document).ready(function(){
+    $('#myDatepicker').datetimepicker({
+        format: 'YYYY.MM.DD hh:mm A'
+    });
+});

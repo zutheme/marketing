@@ -17,14 +17,23 @@
    <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                  	<div align="right">
-          						<a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a>
-          					</div>
+                    <div class="form-group">
+                        <div class="input-group date" id="myDatepicker">
+                            <input type="text" class="form-control">
+                            <span class="input-group-addon">
+                               <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
                   <div class="x_title">
                      @if($message = Session::get('error'))
           			        	<h2 class="card-subtitle">{{ $message }}</h2>
-          					@endif         
-                  </div>
+          					@endif
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -146,7 +155,8 @@
                     <a class="btn btn-primary btn-submit">Xác nhận</a>
                 </div>
             </div>
-
+            <img class="loading" style="display: none;" src="{{ asset('dashboard/production/images/loader.gif') }}">
+            <p class="result"></p>
         </form>
     </div>
   </div>
@@ -170,9 +180,12 @@
     <script src="{{ asset('dashboard/vendors/jszip/dist/jszip.min.js') }}"></script>
     <script src="{{ asset('dashboard/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('dashboard/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- bootstrap-datetimepicker -->    
+    <script src="{{ asset('dashboard/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
       <!-- Custom Theme Scripts -->
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
-    <script src="{{ asset('dashboard/production/js/customer.js?v=0.1.1') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.2.7') }}"></script>
 @stop

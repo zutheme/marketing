@@ -137,13 +137,14 @@ class CustomerRegController extends Controller
         $body = $request->get('body');
         $id_post_type = $request->get('sel_idposttype');
         $id_status_type = $request->get('id_status_type');
+        $idemployee = Auth::id();
         try {
-            $result = DB::select('call customer_interactive_procedure(?,?,?,?)',array($parent_idpost,$body, $id_post_type,$id_status_type));
+            $result = DB::select('call customer_interactive(?,?,?,?,?)',array($parent_idpost,$body, $id_post_type,$id_status_type,$idemployee));
             $cus_interactive = json_decode(json_encode($result), true);
             $success = array('success'=>$cus_interactive);
             return response()->json($success); 
         } catch (\Illuminate\Database\QueryException $ex) {
-            $errors = new MessageBag(['errorsql' => $ex->getMessage()]);
+            $errors = new MessageBag(['error' => $ex->getMessage()]);
             return response()->json($errors);
         }
         return response()->json(array('error' =>'')); 
