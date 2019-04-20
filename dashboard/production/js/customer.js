@@ -59,35 +59,18 @@ function makepost(){
   }
   http.send(params);
 } 
-//end request
-// $(document).ready(function(){
-//         $.ajaxSetup({
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//         });
-//         $(".btn-submit").click(function(e){
-//             e.preventDefault();
-//             var _title = $("input[name=title]").val();
-//             var _body = $("textarea[name=body]").val();
-//             var _url = $("input[name=url]").val();
-//             var _sel_idposttype = $('select[name=sel_idposttype]').val();
-//             var _sel_idcategory = $('select[name=sel_idcategory]').val();
-//             $.ajax({
-//                type:'POST',
-//                url:'svpost/makepost',
-//                data:{title:_title, body:_body,sel_idposttype:_sel_idposttype,sel_idcategory:_sel_idcategory},
-//                success:function(data){
-//                   //alert(data.success);
-//                   if(data.id_svpost > 0){
-//                     e_modal_frm_action.style.display = "none";
-//                   }
-//                }
-//             });
-//         });
-// });
+
 $(document).ready(function(){
-    $('#myDatepicker').datetimepicker({
-        format: 'YYYY.MM.DD hh:mm A'
+    $('#myDatepicker1').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
     });
+    $('#myDatepicker2').datetimepicker({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    });
+    // $("#myDatepicker2").on("dp.change", function(e) {
+    //     var date = $("input[name='datepicker2']").val();
+    // });
+    // $('yourpickerid').on('changeDate', function(ev){
+    //     $(this).datepicker('hide');
+    // });
 });

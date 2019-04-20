@@ -7,33 +7,76 @@
       <link href="{{ asset('dashboard/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dashboard/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dashboard/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
-    
+      
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
       <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.2') }}" rel="stylesheet">
+      <!-- bootstrap-daterangepicker -->
+      <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+      <!-- bootstrap-datetimepicker -->
+      <link href="{{ asset('dashboard/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
 @stop
 
 @section('content')
    <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <div class="form-group">
-                        <div class="input-group date" id="myDatepicker">
-                            <input type="text" class="form-control">
-                            <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
+                    @if(isset($list_selected))
+                       @foreach($list_selected as $row)
+                                  {{ $row['_idcategory'] }}
+                        @endforeach
+                    @endif 
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a></li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_title">
+                   <form method="post" action="{{ url('/admin/customerreg/listcustomerbydate/'.Request::segment(4).'/'.Request::segment(5).'/'.Request::segment(6))}}">
+                   {{--  <form method="post" action="{{ action('Admin\CustomerRegController@ListCustomerByDate', Request::segment(3),Request::segment(4),Request::segment(5) )}}"> --}}
+                      {{ csrf_field() }}
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="input-group date" id="myDatepicker1">
+                                <input type="text" class="form-control _start_date" name="_start_date">
+                                <span class="input-group-addon">
+                                   <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="input-group date" id="myDatepicker2">
+                                <input type="text" class="form-control _end_date" name="_end_date">
+                                <span class="input-group-addon">
+                                   <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                            @if(isset($post_types))
+                              <select class="input-group date" name="sel">
+                                @foreach($post_types as $row)
+                                  {{-- <option value="{{ $row['idposttype'] }}" {{ $row['idposttype'] == $posttype->idparent ? 'selected="selected"' : '' }}>{{ $row['nametype'] }} --}}
+                                @endforeach
+                              </select> 
+                            @endif
+                        </div>
+                      </div>
+                      <div class="col-sm-3 text-center">
+                        {{-- <a class="btn btn-default btn-primary" href="{{ url('/admin/customerreg/'.Request::segment(3).'/'.Request::segment(4).'/'.Request::segment(5))}}">Xác nhận</a> --}}
+                        <input type="submit" class="btn btn-default btn-submit" name="btn-submit" value="Xác nhận" />
+                      </div>
+                    </form>
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="x_title">
                      @if($message = Session::get('error'))
           			        	<h2 class="card-subtitle">{{ $message }}</h2>
-          					@endif
+          					 @endif
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -41,10 +84,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                         @if(isset($post_types))
                           <ul class="dropdown-menu" role="menu">
-                          @foreach($post_types as $row)
-                            <li><a href="{{ url('/admin/customerreg/'.Request::segment(3).'/'.$row['idposttype'].'/'.Request::segment(5))}}">{{ $row['nametype'] }}</a></li>
-                          @endforeach
-                        </ul>    
+                            @foreach($post_types as $row)
+                              <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.Request::segment(4).'/'.$row['idposttype'].'/'.Request::segment(6))}}">{{ $row['nametype'] }}</a></li>
+                            @endforeach
+                          </ul>    
                         @endif          
                       </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
@@ -138,7 +181,6 @@
                   </div>
             </div>
             <div class="form-group row">
-                  {{-- <label class="col-lg-12 col-form-label" for="val-username">Trạng thái<span class="text-danger"></span></label> --}}
                   <div class="col-lg-12">
                      @if(isset($post_type_inter))
                       <select class="form-control sel_idstatustype" name="sel_idstatustype">
@@ -180,6 +222,7 @@
     <script src="{{ asset('dashboard/vendors/jszip/dist/jszip.min.js') }}"></script>
     <script src="{{ asset('dashboard/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
     <script src="{{ asset('dashboard/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('dashboard/vendors/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <!-- bootstrap-datetimepicker -->    
     <script src="{{ asset('dashboard/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
@@ -187,5 +230,5 @@
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
-    <script src="{{ asset('dashboard/production/js/customer.js?v=0.2.7') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.4.4') }}"></script>
 @stop

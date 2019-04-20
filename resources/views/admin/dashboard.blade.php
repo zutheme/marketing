@@ -51,7 +51,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                @if (Auth::check()) 
+                @if (Auth::check())
                     <h2>{{ Auth::user()->name }}</h2> 
                 @endif
               </div>
