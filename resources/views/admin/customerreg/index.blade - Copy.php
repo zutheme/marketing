@@ -10,7 +10,7 @@
       
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.9') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.7') }}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
       <!-- bootstrap-datetimepicker -->
@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-{{ $list_selected }}
+{{-- {{ $list_selected }} --}}
 <?php $lists = json_decode($list_selected, true); 
       $_start_date_sl = $lists['_start_date'];
       $_end_date_sl = $lists['_end_date'];
@@ -36,23 +36,8 @@
    <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                     @if($message = Session::get('error'))
-          			        	<h2 class="card-subtitle">{{ $message }}</h2>
-          					 @endif
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        {{-- <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>  --}}      
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
+                      <li><a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a></li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -84,7 +69,7 @@
                       <div class="col-sm-2">
                         <div class="form-group">
                             @if(isset($post_types))
-                              <select class="form-control sel-control" name="sel_id_post_type" required="true">
+                              <select class="form-control sel-control" name="sel_id_post_type">
                                 @foreach($post_types as $row)
                                   <option value="{{ $row['idposttype'] }}" {{ $row['idposttype'] == $_id_post_type_sl ? 'selected="selected"' : '' }}>{{ $row['nametype'] }}
                                 @endforeach
@@ -95,7 +80,7 @@
                       <div class="col-sm-2">
                         <div class="form-group">
                             @if(isset($status_types))
-                              <select class="form-control sel-control" name="sel_id_status_type" required="true">
+                              <select class="form-control sel-control" name="sel_id_status_type">
                                 @foreach($status_types as $row)
                                   <option value="{{ $row['id_status_type'] }}" {{ $row['id_status_type'] == $_id_status_type_sl ? 'selected="selected"' : '' }}>{{ $row['name_status_type'] }}
                                 @endforeach
@@ -109,6 +94,28 @@
                       </div>
                     </form>
                       <div class="clearfix"></div>
+                  </div>
+                  <div class="x_title">
+                     @if($message = Session::get('error'))
+          			        	<h2 class="card-subtitle">{{ $message }}</h2>
+          					 @endif
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        @if(isset($post_types))
+                          <ul class="dropdown-menu" role="menu">
+                            @foreach($post_types as $row)
+                              <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.Request::segment(4).'/'.$row['idposttype'].'/'.Request::segment(6))}}">{{ $row['nametype'] }}</a></li>
+                            @endforeach
+                          </ul>    
+                        @endif          
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30"></p>
@@ -245,5 +252,5 @@
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
-    <script src="{{ asset('dashboard/production/js/customer.js?v=0.6.3') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.6.1') }}"></script>
 @stop

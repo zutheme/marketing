@@ -7,23 +7,14 @@
                 <ul class="nav side-menu">
 
                   <li><a><i class="fa fa-home"></i> Quản lý khách hàng <span class="fa fa-chevron-down"></span></a>
-
-                    {{-- <ul class="nav child_menu">
-
-                      <li><a href="{{ route('admin.adsvcustomer.index') }}">Khách hàng</a></li>
-
-                      <li><a href="{{ url('/admin/customerreg/3/2/1')}}">localhost</a></li>
-
-                      <li><a href="#">Dashboard3</a></li>
-
-                    </ul> --}}
                     @if(isset($catbytypes))
                       <ul class="nav child_menu">
-                      @foreach($catbytypes as $row)
-                        <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.$row['idcategory'].'/2/1')}}">{{ $row['namecat'] }}</a></li>
-                      @endforeach
-                    </ul>    
-                    @endif               
+                        <li><a href="{{ route('admin.adsvcustomer.index') }}">Khách hàng</a></li>
+                        @foreach($catbytypes as $row)
+                          <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.$row['idcategory'].'/2/1')}}">{{ $row['namecat'] }}</a></li>
+                        @endforeach
+                      </ul>    
+                      @endif               
                     
                   </li>
 

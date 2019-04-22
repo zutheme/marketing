@@ -25,11 +25,21 @@ function makepost(){
   var _body = _e_frm_reg.getElementsByClassName("body")[0].value;
   var _sel_idposttype =  _e_frm_reg.getElementsByClassName("sel_idposttype")[0].value;
   var _sel_idstatustype =  _e_frm_reg.getElementsByClassName("sel_idstatustype")[0].value;
+  if(!_body){
+      alert("Bạn chưa nhập nội dung");
+      return false;
+  }
+  if (!_sel_idposttype){
+    alert("Bạn chưa chọn kiểu nội dung");
+    return false;
+  }if (!_sel_idstatustype){
+    alert("Bạn chưa chọn trạng thái");
+    return false;
+  }
   var http = new XMLHttpRequest();
   var url = "/marketing/admin/customerreg/interactive";
   //var obj = JSON.stringify({name:"John Rambo", email:_email});
   var params = "body="+_body+"&sel_idposttype="+_sel_idposttype+"&idpost="+_idpost+"&id_status_type="+_sel_idstatustype;
-  console.log(params);
   http.open("POST", url, true);
   http.setRequestHeader("X-CSRF-TOKEN", _csrf_token);
   http.setRequestHeader("Accept", "application/json");
@@ -68,9 +78,20 @@ $(document).ready(function(){
       format: 'YYYY-MM-DD HH:mm:ss'
     });
     // $("#myDatepicker2").on("dp.change", function(e) {
-    //     var date = $("input[name='datepicker2']").val();
+    //$("input[name='_start_date']").val(_start_date_sl);
     // });
     // $('yourpickerid').on('changeDate', function(ev){
     //     $(this).datepicker('hide');
     // });
+    if(_start_date_sl&&_end_date_sl){
+        $("input[name='_start_date']").val(_start_date_sl);
+        $("input[name='_end_date']").val(_end_date_sl);
+    }else{
+      //var str_start = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+      var today = new Date();
+      var str_start = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" 00:00:00";
+      var str_end = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+" 23:59:59";
+        $("input[name='_start_date']").val(str_start);
+        $("input[name='_end_date']").val(str_end);
+    }
 });

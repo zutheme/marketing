@@ -103,7 +103,7 @@ class CustomerRegController extends Controller
     {
         //
     }
-    public function ListCustomerByCat($_idcategory='1',$_id_post_type='1',$_id_status_type='1',$_start_date="",$_end_date=""){
+    public function ListCustomerByCat(Request $request,$_idcategory='1',$_id_post_type='1',$_id_status_type='1',$_start_date="",$_end_date=""){
         try {
             $_namecattype="website";
             $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
@@ -116,12 +116,16 @@ class CustomerRegController extends Controller
             $post_type_inter = json_decode(json_encode($rs_post_type_inter), true);
             $_idparent_status = 0;
             $rs_status_type = DB::select('call ListStatusTypeProcedure(?)',array($_idparent_status));
-            $status_types = json_decode(json_encode($rs_status_type), true);           
-            //$_idcategory = $request->get('idcategory');
-            //$_idcategory = $request->input('idcategory');
+            $status_types = json_decode(json_encode($rs_status_type), true);
+
+            $_start_date = $request->get('_start_date');
+            $_end_date = $request->input('_end_date');
+          
+            $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type);
+            $list_selected = json_encode($rs_selected);
             $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
             $customer_reg = json_decode(json_encode($result), true);
-            return view('admin.customerreg.index',compact('customer_reg','catbytypes','post_types','post_type_inter','status_types'));
+            return view('admin.customerreg.index',compact('customer_reg','catbytypes','post_types','post_type_inter','status_types','list_selected'));
         } catch (\Illuminate\Database\QueryException $ex) {
             $errors = new MessageBag(['errorsql' => $ex->getMessage()]);
             return redirect()->route('admin.customerreg.index')->with('error',$errors);
@@ -146,7 +150,7 @@ class CustomerRegController extends Controller
         }
         return response()->json(array('error' =>'')); 
     }
-    public function ListCustomerByDate(Request $request,$_idcategory='1',$_id_post_type='1',$_id_status_type='1'){
+    public function ListCustomerByDate(Request $request){
         try {
             $_namecattype="website";
             $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
@@ -162,6 +166,9 @@ class CustomerRegController extends Controller
             $status_types = json_decode(json_encode($rs_status_type), true);           
             $_start_date = $request->get('_start_date');
             $_end_date = $request->input('_end_date');
+            $_idcategory = $request->get('sel_idcategory');
+            $_id_post_type = $request->get('sel_id_post_type');
+            $_id_status_type = $request->get('sel_id_status_type');
             $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
             $customer_reg = json_decode(json_encode($result), true);
             $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type);

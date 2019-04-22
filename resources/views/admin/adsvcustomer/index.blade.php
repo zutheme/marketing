@@ -34,8 +34,8 @@
 							<th>Họ tên</th>
 							<th>Email</th>
 							<th>Điện thoại</th>
-							<th>Dịch vụ</th>
-							<th>Nguồn</th>
+							<th>Địa chỉ</th>
+							<th>Nghề nghiệp</th>
 							<th>Ghi chú</th>
 							<th>-</th>
 							<th>-</th>
@@ -48,8 +48,8 @@
 							<th>Họ tên</th>
 							<th>Email</th>
 							<th>Điện thoại</th>
-							<th>Dịch vụ</th>
-							<th>Nguồn</th>
+							<th>Địa chỉ</th>
+							<th>Nghề nghiệp</th>
 							<th>Ghi chú</th>
 							<th></th>
 							<th></th>
