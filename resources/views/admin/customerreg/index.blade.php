@@ -10,7 +10,7 @@
       
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.9') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.3') }}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
       <!-- bootstrap-datetimepicker -->
@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-{{ $list_selected }}
+
 <?php $lists = json_decode($list_selected, true); 
       $_start_date_sl = $lists['_start_date'];
       $_end_date_sl = $lists['_end_date'];
@@ -28,6 +28,7 @@
       $_idcategory = isset($_idcategory_sl) ? $_idcategory_sl : Request::segment(4);
       $_id_post_type = isset($_id_post_type_sl) ? $_id_post_type_sl : Request::segment(5);
       $_id_status_type = isset($_id_status_type_sl) ? $_id_status_type_sl : Request::segment(6);
+      $_sel_receive = $lists['_sel_receive'];
 ?>
 <script type="text/javascript">
   var _start_date_sl = '<?php echo $_start_date_sl; ?>';
@@ -57,10 +58,11 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_title">
-                   <form method="post" action="{{ url('/admin/customerreg/listcustomerbydate/'.$_idcategory.'/'.$_id_post_type.'/'.$_id_status_type)}}">
+                   <form method="post" action="{{ url('/admin/customerreg/listcustomerbydate/'.$_idcategory.'/'.$_id_post_type.'/'.$_id_status_type) }}">
                    {{--  <form method="post" action="{{ action('Admin\CustomerRegController@ListCustomerByDate', Request::segment(3),Request::segment(4),Request::segment(5) )}}"> --}}
                       {{ csrf_field() }}
                       <input type="hidden" name="sel_idcategory" value="{{ $_idcategory }}">
+                      <input type="hidden" name="sel_id_status_type" value="{{ $_id_status_type }}">
                       <div class="col-sm-3">
                         <div class="form-group">
                             <div class="input-group sel-control" id="myDatepicker1">
@@ -85,30 +87,30 @@
                         <div class="form-group">
                             @if(isset($post_types))
                               <select class="form-control sel-control" name="sel_id_post_type" required="true">
+                                <option value="0" {{ $_id_post_type_sl == 0 ? 'selected="selected"' : '' }}>Tất cả</option>
                                 @foreach($post_types as $row)
-                                  <option value="{{ $row['idposttype'] }}" {{ $row['idposttype'] == $_id_post_type_sl ? 'selected="selected"' : '' }}>{{ $row['nametype'] }}
+                                  <option value="{{ $row['idposttype'] }}" {{ $row['idposttype'] == $_id_post_type_sl ? 'selected="selected"' : '' }}>{{ $row['nametype'] }}</option>
                                 @endforeach
                               </select> 
                             @endif
                         </div>
-                      </div>
+                      </div> 
                       <div class="col-sm-2">
                         <div class="form-group">
-                            @if(isset($status_types))
-                              <select class="form-control sel-control" name="sel_id_status_type" required="true">
-                                @foreach($status_types as $row)
-                                  <option value="{{ $row['id_status_type'] }}" {{ $row['id_status_type'] == $_id_status_type_sl ? 'selected="selected"' : '' }}>{{ $row['name_status_type'] }}
-                                @endforeach
-                              </select> 
-                            @endif
+                          <p></p>
+                              <label>Chưa tiếp nhận:</label> 
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="0" {{ $_sel_receive == 0  ? 'checked="" required' : '' }} /> 
+                              <label>Đã tiếp nhận:</label>
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="1" {{ $_sel_receive == 1  ? 'checked="" required' : '' }} />
                         </div>
-                      </div>
+                      </div>   
                       <div class="col-sm-2 text-center">
                         {{-- <a class="btn btn-default btn-primary" href="{{ url('/admin/customerreg/'.Request::segment(3).'/'.Request::segment(4).'/'.Request::segment(5))}}">Xác nhận</a> --}}
                         <input type="submit" class="btn btn-default btn-filter-date" name="filter-date" value="Báo cáo" />
                       </div>
                     </form>
                       <div class="clearfix"></div>
+                      {{-- {{ sizeof($customer_reg) }} --}}
                   </div>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30"></p>

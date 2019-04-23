@@ -11,7 +11,7 @@
                       <ul class="nav child_menu">
                         <li><a href="{{ route('admin.adsvcustomer.index') }}">Khách hàng</a></li>
                         @foreach($catbytypes as $row)
-                          <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.$row['idcategory'].'/2/1')}}">{{ $row['namecat'] }}</a></li>
+                          <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.$row['idcategory'].'/0/1')}}">{{ $row['namecat'] }}</a></li>
                         @endforeach
                       </ul>    
                       @endif               

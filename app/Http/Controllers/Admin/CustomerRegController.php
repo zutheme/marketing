@@ -120,8 +120,8 @@ class CustomerRegController extends Controller
 
             $_start_date = $request->get('_start_date');
             $_end_date = $request->input('_end_date');
-          
-            $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type);
+            $_sel_receive = 0;
+            $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type,'_sel_receive'=>$_sel_receive);
             $list_selected = json_encode($rs_selected);
             $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
             $customer_reg = json_decode(json_encode($result), true);
@@ -169,9 +169,10 @@ class CustomerRegController extends Controller
             $_idcategory = $request->get('sel_idcategory');
             $_id_post_type = $request->get('sel_id_post_type');
             $_id_status_type = $request->get('sel_id_status_type');
+            $_sel_receive = $request->get('sel_receive');
             $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
             $customer_reg = json_decode(json_encode($result), true);
-            $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type);
+            $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type,'_sel_receive' => $_sel_receive);
             $list_selected = json_encode($rs_selected);
             return view('admin.customerreg.index',compact('customer_reg','catbytypes','post_types','post_type_inter','status_types','list_selected'));
         } catch (\Illuminate\Database\QueryException $ex) {
