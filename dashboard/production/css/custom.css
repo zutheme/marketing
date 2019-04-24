@@ -237,7 +237,7 @@ textarea.form-control-text {
 .sel-control {
     position: relative;
     width: 100%;
-    z-index: 5;
+    z-index: 1;
 }
 .btn-filter-date {
     position: relative;

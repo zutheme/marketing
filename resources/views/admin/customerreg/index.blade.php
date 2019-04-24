@@ -10,7 +10,7 @@
       
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.3') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.4') }}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
       <!-- bootstrap-datetimepicker -->
@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-
+{{ $list_selected }}
 <?php $lists = json_decode($list_selected, true); 
       $_start_date_sl = $lists['_start_date'];
       $_end_date_sl = $lists['_end_date'];
@@ -63,7 +63,7 @@
                       {{ csrf_field() }}
                       <input type="hidden" name="sel_idcategory" value="{{ $_idcategory }}">
                       <input type="hidden" name="sel_id_status_type" value="{{ $_id_status_type }}">
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
                         <div class="form-group">
                             <div class="input-group sel-control" id="myDatepicker1">
                                 <input type="text" class="form-control _start_date" name="_start_date">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
                         <div class="form-group">
                             <div class="input-group sel-control" id="myDatepicker2">
                                 <input type="text" class="form-control _end_date" name="_end_date">
@@ -95,13 +95,15 @@
                             @endif
                         </div>
                       </div> 
-                      <div class="col-sm-2">
+                      <div class="col-sm-4 text-center">
                         <div class="form-group">
                           <p></p>
+                              <label>Tất cả:</label> 
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="0" {{ $_sel_receive == 0  ? 'checked="" required' : '' }} />&nbsp;&nbsp;
                               <label>Chưa tiếp nhận:</label> 
-                              <input type="radio" class="flat form-control" name="sel_receive"  value="0" {{ $_sel_receive == 0  ? 'checked="" required' : '' }} /> 
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="1" {{ $_sel_receive == 1  ? 'checked="" required' : '' }} />&nbsp;&nbsp; 
                               <label>Đã tiếp nhận:</label>
-                              <input type="radio" class="flat form-control" name="sel_receive"  value="1" {{ $_sel_receive == 1  ? 'checked="" required' : '' }} />
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="2" {{ $_sel_receive == 2  ? 'checked="" required' : '' }} />
                         </div>
                       </div>   
                       <div class="col-sm-2 text-center">

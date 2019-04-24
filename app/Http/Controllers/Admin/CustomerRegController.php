@@ -103,7 +103,7 @@ class CustomerRegController extends Controller
     {
         //
     }
-    public function ListCustomerByCat(Request $request,$_idcategory='1',$_id_post_type='1',$_id_status_type='1',$_start_date="",$_end_date=""){
+    public function ListCustomerByCat(Request $request,$_idcategory='0',$_id_post_type='0',$_id_status_type='0',$_start_date="",$_end_date=""){
         try {
             $_namecattype="website";
             $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
@@ -123,7 +123,7 @@ class CustomerRegController extends Controller
             $_sel_receive = 0;
             $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type,'_sel_receive'=>$_sel_receive);
             $list_selected = json_encode($rs_selected);
-            $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
+            $result = DB::select('call ListCustomerRegister(?,?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type,$_sel_receive));
             $customer_reg = json_decode(json_encode($result), true);
             return view('admin.customerreg.index',compact('customer_reg','catbytypes','post_types','post_type_inter','status_types','list_selected'));
         } catch (\Illuminate\Database\QueryException $ex) {
@@ -170,7 +170,7 @@ class CustomerRegController extends Controller
             $_id_post_type = $request->get('sel_id_post_type');
             $_id_status_type = $request->get('sel_id_status_type');
             $_sel_receive = $request->get('sel_receive');
-            $result = DB::select('call ListCustomerRegister(?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type));
+            $result = DB::select('call ListCustomerRegister(?,?,?,?,?,?)',array($_start_date,$_end_date, $_idcategory, $_id_post_type, $_id_status_type,$_sel_receive));
             $customer_reg = json_decode(json_encode($result), true);
             $rs_selected = array('_start_date'=>$_start_date,'_end_date'=>$_end_date,'_idcategory'=>$_idcategory,'_id_post_type'=>$_id_post_type,'_id_status_type'=>$_id_status_type,'_sel_receive' => $_sel_receive);
             $list_selected = json_encode($rs_selected);
