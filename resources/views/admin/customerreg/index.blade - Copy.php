@@ -10,7 +10,7 @@
       
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.7') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.4') }}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
       <!-- bootstrap-datetimepicker -->
@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-{{-- {{ $list_selected }} --}}
+{{ $list_selected }}
 <?php $lists = json_decode($list_selected, true); 
       $_start_date_sl = $lists['_start_date'];
       $_end_date_sl = $lists['_end_date'];
@@ -28,6 +28,7 @@
       $_idcategory = isset($_idcategory_sl) ? $_idcategory_sl : Request::segment(4);
       $_id_post_type = isset($_id_post_type_sl) ? $_id_post_type_sl : Request::segment(5);
       $_id_status_type = isset($_id_status_type_sl) ? $_id_status_type_sl : Request::segment(6);
+      $_sel_receive = $lists['_sel_receive'];
 ?>
 <script type="text/javascript">
   var _start_date_sl = '<?php echo $_start_date_sl; ?>';
@@ -36,17 +37,33 @@
    <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
+                     @if($message = Session::get('error'))
+          			        	<h2 class="card-subtitle">{{ $message }}</h2>
+          					 @endif
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="btn btn-default btn-primary" href="{{ URL::route('admin.customerreg.create') }}">Thêm mới</a></li>
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        {{-- <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>  --}}      
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_title">
-                   <form method="post" action="{{ url('/admin/customerreg/listcustomerbydate/'.$_idcategory.'/'.$_id_post_type.'/'.$_id_status_type)}}">
+                   <form method="post" action="{{ url('/admin/customerreg/listcustomerbydate/'.$_idcategory.'/'.$_id_post_type.'/'.$_id_status_type) }}">
                    {{--  <form method="post" action="{{ action('Admin\CustomerRegController@ListCustomerByDate', Request::segment(3),Request::segment(4),Request::segment(5) )}}"> --}}
                       {{ csrf_field() }}
                       <input type="hidden" name="sel_idcategory" value="{{ $_idcategory }}">
-                      <div class="col-sm-3">
+                      <input type="hidden" name="sel_id_status_type" value="{{ $_id_status_type }}">
+                      <div class="col-sm-2">
                         <div class="form-group">
                             <div class="input-group sel-control" id="myDatepicker1">
                                 <input type="text" class="form-control _start_date" name="_start_date">
@@ -56,7 +73,7 @@
                             </div>
                         </div>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
                         <div class="form-group">
                             <div class="input-group sel-control" id="myDatepicker2">
                                 <input type="text" class="form-control _end_date" name="_end_date">
@@ -69,53 +86,33 @@
                       <div class="col-sm-2">
                         <div class="form-group">
                             @if(isset($post_types))
-                              <select class="form-control sel-control" name="sel_id_post_type">
+                              <select class="form-control sel-control" name="sel_id_post_type" required="true">
+                                <option value="0" {{ $_id_post_type_sl == 0 ? 'selected="selected"' : '' }}>Tất cả</option>
                                 @foreach($post_types as $row)
-                                  <option value="{{ $row['idposttype'] }}" {{ $row['idposttype'] == $_id_post_type_sl ? 'selected="selected"' : '' }}>{{ $row['nametype'] }}
+                                  <option value="{{ $row['idposttype'] }}" {{ $row['idposttype'] == $_id_post_type_sl ? 'selected="selected"' : '' }}>{{ $row['nametype'] }}</option>
                                 @endforeach
                               </select> 
                             @endif
                         </div>
-                      </div>
-                      <div class="col-sm-2">
+                      </div> 
+                      <div class="col-sm-4 text-center">
                         <div class="form-group">
-                            @if(isset($status_types))
-                              <select class="form-control sel-control" name="sel_id_status_type">
-                                @foreach($status_types as $row)
-                                  <option value="{{ $row['id_status_type'] }}" {{ $row['id_status_type'] == $_id_status_type_sl ? 'selected="selected"' : '' }}>{{ $row['name_status_type'] }}
-                                @endforeach
-                              </select> 
-                            @endif
+                          <p></p>
+                              <label>Tất cả:</label> 
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="0" {{ $_sel_receive == 0  ? 'checked="" required' : '' }} />&nbsp;&nbsp;
+                              <label>Chưa tiếp nhận:</label> 
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="1" {{ $_sel_receive == 1  ? 'checked="" required' : '' }} />&nbsp;&nbsp; 
+                              <label>Đã tiếp nhận:</label>
+                              <input type="radio" class="flat form-control" name="sel_receive"  value="2" {{ $_sel_receive == 2  ? 'checked="" required' : '' }} />
                         </div>
-                      </div>
+                      </div>   
                       <div class="col-sm-2 text-center">
                         {{-- <a class="btn btn-default btn-primary" href="{{ url('/admin/customerreg/'.Request::segment(3).'/'.Request::segment(4).'/'.Request::segment(5))}}">Xác nhận</a> --}}
                         <input type="submit" class="btn btn-default btn-filter-date" name="filter-date" value="Báo cáo" />
                       </div>
                     </form>
                       <div class="clearfix"></div>
-                  </div>
-                  <div class="x_title">
-                     @if($message = Session::get('error'))
-          			        	<h2 class="card-subtitle">{{ $message }}</h2>
-          					 @endif
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        @if(isset($post_types))
-                          <ul class="dropdown-menu" role="menu">
-                            @foreach($post_types as $row)
-                              <li><a href="{{ url('/admin/customerreg/listcustomerbycat/'.Request::segment(4).'/'.$row['idposttype'].'/'.Request::segment(6))}}">{{ $row['nametype'] }}</a></li>
-                            @endforeach
-                          </ul>    
-                        @endif          
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
+                      {{-- {{ sizeof($customer_reg) }} --}}
                   </div>
                   <div class="x_content">
                     <p class="text-muted font-13 m-b-30"></p>
@@ -159,7 +156,7 @@
                         <input type="hidden" name="idpost_row" value="{{ $row['idpost'] }}">
                         <a onclick="popup_modal({{ $row['idpost'] }});" class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
                      </td>		
-      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['idimppost']) }}"><i class="fa fa-edit"></i></a></td>
+      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@show',$row['idimppost']) }}"><i class="fa fa-search-plus"></i></a></td>
       								<td class="btn-control">
       								     <form method="post" class="delete_form" action="{{action('Admin\CustomerRegController@destroy', $row['idimppost'])}}">
       								      {{csrf_field()}}
@@ -252,5 +249,5 @@
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
-    <script src="{{ asset('dashboard/production/js/customer.js?v=0.6.1') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.6.3') }}"></script>
 @stop

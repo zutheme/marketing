@@ -126,8 +126,6 @@
                           <th>Nguồn</th>
                           <th>Chi nhánh</th>
             							<th>-</th>
-            							<th>-</th>
-                          <th>-</th>
             	         </tr>
             	     </thead>
             	     <tfoot>
@@ -138,8 +136,6 @@
                           <th>Email</th>
                           <th>Nguồn</th>
                           <th>Chi nhánh</th>
-                          <th>-</th>
-                          <th>-</th>
                           <th>-</th>
                        </tr>
 	                </tfoot>
@@ -154,16 +150,8 @@
                       <td>{{ $row['address_reg'] }}</td>
                       <td class="btn-control-action">
                         <input type="hidden" name="idpost_row" value="{{ $row['idpost'] }}">
-                        <a onclick="popup_modal({{ $row['idpost'] }});" class="btn btn-primary btn-action" href="javascript:void(0)"><i class="fa fa-comments-o"></i></a>
+                        <a class="btn btn-primary btn-action" href="{{ action('Admin\CustomerRegController@show',$row['idimppost']) }}"><i class="fa fa-comments-o"></i></a>
                      </td>		
-      								<td class="btn-control"><a class="btn btn-primary btn-edit" href="{{ action('Admin\CustomerRegController@edit',$row['idimppost']) }}"><i class="fa fa-edit"></i></a></td>
-      								<td class="btn-control">
-      								     <form method="post" class="delete_form" action="{{action('Admin\CustomerRegController@destroy', $row['idimppost'])}}">
-      								      {{csrf_field()}}
-      								      <input type="hidden" name="_method" value="DELETE" />
-      								      <button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-      								     </form>
-      								</td>
       							</tr>
       							@endforeach                
 	                </tbody>
@@ -172,56 +160,7 @@
         </div>
       </div>
 </div>
-<div class="modal-cus">
-  <div class="modal-content-cus">
-      <span class="close">&times;</span>
-        <div class="x_content"> 
-        <form class="form-valide frm_post">
-            
-            <div class="form-group row">
-                  <label class="col-lg-12 col-form-label" for="val-username">Nội dung <span class="text-danger"></span></label>
-                  <div class="col-lg-12">
-                     <textarea name="body" rows="4" cols="50" class="form-control-text body" placeholder="Nội dung"></textarea>
-                  </div>
-                  <input type="hidden" class="idpost" name="idpost" value="0">
-            </div>
-              
-            <div class="form-group row">
-                  <label class="col-lg-12 col-form-label" for="val-username">Tương tác<span class="text-danger"></span></label>
-                  <div class="col-lg-12">
-                     @if(isset($post_type_inter))
-                      <select class="form-control sel_idposttype" name="sel_idposttype">
-                        <option value="">Chọn kiểu nội dung</option>
-                       @foreach($post_type_inter as $row)
-                           <option value="{{ $row['idposttype'] }}">{{ $row['nametype'] }}</option>
-                        @endforeach
-                      </select>
-                      @endif
-                  </div>
-            </div>
-            <div class="form-group row">
-                  <div class="col-lg-12">
-                     @if(isset($post_type_inter))
-                      <select class="form-control sel_idstatustype" name="sel_idstatustype">
-                        <option value="">Chọn kiểu trạng thái</option>
-                       @foreach($status_types as $row)
-                           <option value="{{ $row['id_status_type'] }}">{{ $row['name_status_type'] }}</option>
-                        @endforeach
-                      </select>
-                      @endif
-                  </div>
-            </div>  
-            <div class="form-group row">
-                <div class="col-lg-12 col-sm-12 text-center">
-                    <a class="btn btn-primary btn-submit">Xác nhận</a>
-                </div>
-            </div>
-            <img class="loading" style="display: none;" src="{{ asset('dashboard/production/images/loader.gif') }}">
-            <p class="result"></p>
-        </form>
-    </div>
-  </div>
-</div>
+
 @stop
 
 @section('other_scripts')
@@ -249,5 +188,5 @@
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/build/js/custom.js') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.0.2') }}"></script>
-    <script src="{{ asset('dashboard/production/js/customer.js?v=0.6.3') }}"></script>
+    <script src="{{ asset('dashboard/production/js/customer.js?v=0.6.4') }}"></script>
 @stop

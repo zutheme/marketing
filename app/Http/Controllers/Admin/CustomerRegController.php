@@ -67,7 +67,8 @@ class CustomerRegController extends Controller
      */
     public function show($id)
     {
-        //
+        $message = $id;
+        return view('admin.customerreg.show',compact('message'));
     }
 
     /**
