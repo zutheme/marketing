@@ -3,13 +3,14 @@
 @section('other_styles')
       <!-- Custom Theme Style -->
     <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.2') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.4') }}" rel="stylesheet">
 @stop
 @section('content')
+<?php $_sel_idposttype = 0; ?>
  <!-- page content -->       
             <div class="page-title">
               <div class="title_left">
-                <h3>Project Detail <small> design</small></h3>
+                <h3>Tương tác<small> </small></h3>
               </div>
 
               <div class="title_right">
@@ -30,7 +31,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>New Partner Contracts Consultancy</h2>
+                    <h2>&nbsp;</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -83,11 +84,7 @@
                         <ul class="messages">
                           <li>
                             <img src="{{ asset('dashboard/production/images/img.jpg') }}" class="avatar" alt="Avatar">
-                            <div class="message_date">
-                              <h3 class="date text-info">24</h3>
-                              <p class="month">May</p>
-                            </div>
-                            <div class="message_wrapper">
+                            <div class="message_wrapper comment">
                               <h4 class="heading">Desmond Davison</h4>
                               <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
                               <br />
@@ -98,17 +95,36 @@
                             </div>
                           </li>
                         </ul>
-                        <ul class="messages">
-                          <li>
-                            <img src="{{ asset('dashboard/production/images/img.jpg') }}" class="avatar" alt="Avatar">
-                            <div class="message_wrapper">
-                            	<textarea class="resizable_textarea form-control" placeholder="This text area automatically resizes its height as you fill in more text courtesy of autosize-master it out..."></textarea>
-                            </div>
-                          </li>
-                        </ul>
+                      <form method="post" action="{{ url('/admin/customerreg/interactivecustomer') }}">
+                        {{ csrf_field() }}
+                        <div class="x_panel">
+                          <div class="x_title">
+                            <h2>&nbsp;</h2>
+                            @if(isset($post_type_inter))
+                              <ul class="nav navbar-right panel_toolbox">
+                                @foreach($post_type_inter as $row)
+                                  <li>&nbsp;&nbsp;&nbsp;<label>{{ $row['nametype'] }}:&nbsp;</label><input type="radio" class="flat form-control" name="sel_idposttype"  value="{{ $row['idposttype'] }}"/></li>
+                                @endforeach
+                              </ul> 
+                            @endif
+                            <div class="clearfix"></div>
+                          </div>
+                          <div class="x_content">
+                            <ul class="messages">
+                              <li>
+                                <img src="{{ asset('dashboard/production/images/img.jpg') }}" class="avatar" alt="Avatar">
+                                <div class="message_wrapper comment">
+                                  <textarea class="resizable_textarea form-control" placeholder="Ghi chú"></textarea>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <ul class="nav navbar-right panel_toolbox">
+                              <li><input class="btn btn-default" type="submit" name="submit-info" value="Xác nhận"></li>
+                            </ul>
+                        </div>
+                        </form>                 
                         <!-- end of user messages -->
-
-
                       </div>
 
 
@@ -120,7 +136,7 @@
                       <section class="panel">
 
                         <div class="x_title">
-                          <h2>Project Description</h2>
+                          <h2>Thông tin khách hàng</h2>
                           <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">

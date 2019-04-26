@@ -10,7 +10,7 @@
       
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.4') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.8') }}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
       <!-- bootstrap-datetimepicker -->
@@ -37,6 +37,9 @@
    <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
+                    @if(isset($errors))
+                      {{ $errors }}
+                    @endif
                      @if($message = Session::get('error'))
           			        	<h2 class="card-subtitle">{{ $message }}</h2>
           					 @endif
@@ -150,7 +153,7 @@
                       <td>{{ $row['address_reg'] }}</td>
                       <td class="btn-control-action">
                         <input type="hidden" name="idpost_row" value="{{ $row['idpost'] }}">
-                        <a class="btn btn-primary btn-action" href="{{ action('Admin\CustomerRegController@show',$row['idimppost']) }}"><i class="fa fa-comments-o"></i></a>
+                        <a href="{{ action('Admin\CustomerRegController@show',$row['idimppost']) }}" class="info-number"><i class="fa fa-envelope-o"></i><span class="badge bg-green">6</span></a>
                      </td>		
       							</tr>
       							@endforeach                

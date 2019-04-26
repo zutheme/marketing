@@ -67,8 +67,13 @@ class CustomerRegController extends Controller
      */
     public function show($id)
     {
-        $message = $id;
-        return view('admin.customerreg.show',compact('message'));
+
+        $rsdetailInteractive = DB::select('call DetailInteractiveProcedure(?)',array($idpost));
+        $detailInteractive = json_decode(json_encode($rsdetailInteractive), true);
+        $_idinter = 4;
+        $rs_post_type_inter = DB::select('call ListPostTypeByIdcatProcedure(?)',array($_idinter));
+        $post_type_inter = json_decode(json_encode($rs_post_type_inter), true);
+        return view('admin.customerreg.show',compact('post_type_inter','message'));
     }
 
     /**
@@ -181,5 +186,23 @@ class CustomerRegController extends Controller
             return redirect()->route('admin.customerreg.index')->with('error',$errors);
         }
         return view('admin.customerreg.index',compact('customer_reg','data'));
+    }
+    public function interactive_customer(Request $request)
+    {
+        $parent_idpost = $request->get('idpost');
+        $body = $request->get('body');
+        $id_post_type = $request->get('sel_idposttype');
+        $id_status_type = $request->get('id_status_type');
+        $idemployee = Auth::id();
+        try {
+            $result = DB::select('call customer_interactive(?,?,?,?,?)',array($parent_idpost,$body, $id_post_type,$id_status_type,$idemployee));
+            $cus_interactive = json_decode(json_encode($result), true);
+            $success = array('success'=>$cus_interactive);
+            return view('admin.customerreg.show',compact('message')); 
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['error' => $ex->getMessage()]);
+            return view('admin.customerreg.show',compact('errors'));
+        }
+        return view('admin.customerreg.show',compact('message')); 
     }
 }

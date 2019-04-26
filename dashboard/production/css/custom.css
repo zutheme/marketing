@@ -251,3 +251,20 @@ textarea.form-control-text {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+ul.messages li .message_wrapper.comment {
+    margin-left: 50px;
+    margin-right: 0px;
+}
+.btn-control-action {
+    position: relative;
+    text-align: center;
+}
+.btn-control-action .info-number .badge {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 13px;
+    padding: 2px 6px;
+    position: relative;
+    right: 2px;
+    top: -8px;
+}
