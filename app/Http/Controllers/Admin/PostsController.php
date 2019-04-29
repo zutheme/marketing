@@ -115,7 +115,6 @@ class PostsController extends Controller
                         $id_file=$item->idfile;
                         $idfile .= $id_file;
                     }
-                              
                     //$idinserted = json_decode(json_encode($idinserteds), true);
                     $message .= $idfile.",";
                 }

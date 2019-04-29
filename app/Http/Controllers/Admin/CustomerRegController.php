@@ -65,15 +65,21 @@ class CustomerRegController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idimppost)
     {
 
-        $rsdetailInteractive = DB::select('call DetailInteractiveProcedure(?)',array($idpost));
-        $detailInteractive = json_decode(json_encode($rsdetailInteractive), true);
+        $_namecattype="website";
+        $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+        $catbytypes = json_decode(json_encode($rs_catbytype), true);
+        $rsdetailInteractive = DB::select('call DetailInteractive(?)',array($idimppost));
+        $detailpost = json_decode(json_encode($rsdetailInteractive), true);
+
+        $rs_activity = DB::select('call activity_interactive(?)',array($idimppost));
+        $activitys = json_decode(json_encode($rs_activity), true);
         $_idinter = 4;
         $rs_post_type_inter = DB::select('call ListPostTypeByIdcatProcedure(?)',array($_idinter));
         $post_type_inter = json_decode(json_encode($rs_post_type_inter), true);
-        return view('admin.customerreg.show',compact('post_type_inter','message'));
+        return view('admin.customerreg.show',compact('post_type_inter','detailpost','catbytypes','activitys'));
     }
 
     /**

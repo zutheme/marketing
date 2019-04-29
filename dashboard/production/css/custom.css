@@ -268,3 +268,7 @@ ul.messages li .message_wrapper.comment {
     right: 2px;
     top: -8px;
 }
+.panel-body .avatars {
+    width: 100%;
+    height: auto;
+}

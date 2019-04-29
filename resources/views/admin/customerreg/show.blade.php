@@ -3,7 +3,7 @@
 @section('other_styles')
       <!-- Custom Theme Style -->
     <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.4') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.5') }}" rel="stylesheet">
 @stop
 @section('content')
 <?php $_sel_idposttype = 0; ?>
@@ -51,7 +51,17 @@
                   </div>
 
                   <div class="x_content">
-
+                    @if(isset($detailpost))
+                          @foreach($detailpost as $row)
+                            <?php $post = $row['body']; 
+                                  $firstname = $row['firstname']; 
+                                  $mobile = $row['mobile'];
+                                  $email= $row['email'];
+                                  $address = $row['address'];
+                                  $job = $row['job'];
+                            ?>
+                          @endforeach
+                        @endif
                     <div class="col-md-9 col-sm-9 col-xs-12">
 
                       <ul class="stats-overview">
@@ -72,9 +82,7 @@
 
                       {{-- <div id="mainb" style="height:350px;"></div> --}}
                       <div class="detail-post">
-                      	@if(isset($message))
-                      		{{ $message }}
-                      	@endif 
+                      	{{ $post }} 
                       </div>
                       <div>
 
@@ -82,18 +90,22 @@
 
                         <!-- end of user messages -->
                         <ul class="messages">
-                          <li>
-                            <img src="{{ asset('dashboard/production/images/img.jpg') }}" class="avatar" alt="Avatar">
-                            <div class="message_wrapper comment">
-                              <h4 class="heading">Desmond Davison</h4>
-                              <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                              <br />
-                              <p class="url">
-                                <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                              </p>
-                            </div>
-                          </li>
+                           @if(isset($activitys))
+                              @foreach($activitys as $row)
+                              <li>
+                                <img src="{{ asset('dashboard/production/images/avatar/avatar3.jpg') }}" class="avatar" alt="Avatar">
+                                <div class="message_wrapper comment">
+                                  <h4 class="heading">Desmond Davison</h4>
+                                  <blockquote class="message">{{ $row['body']}}</blockquote>
+                                  <br />
+                                  <p class="url">
+                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                    <a href="#"><i class="fa fa-paperclip"></i> {{ $row['created_at'] }} </a>
+                                  </p>
+                                </div>
+                              </li>
+                              @endforeach
+                            @endif
                         </ul>
                       <form method="post" action="{{ url('/admin/customerreg/interactivecustomer') }}">
                         {{ csrf_field() }}
@@ -140,21 +152,27 @@
                           <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
-                          <h3 class="green"><i class="fa fa-paint-brush"></i> Gentelella</h3>
-
-                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
+                          <img src="{{ asset('dashboard/production/images/avatar/avatar2.jpg') }}" class="avatars" alt="Avatar">
+                          <h3 class="green">{{ $firstname }} </h3>
+                          <p></p>
                           <br />
 
                           <div class="project_detail">
-
-                            <p class="title">Client Company</p>
-                            <p>Deveint Inc</p>
-                            <p class="title">Project Leader</p>
-                            <p>Tony Chicken</p>
+                            <p class="title">Điện thoại</p>
+                            <p>{{ $mobile}}</p>
+                            <p class="title">Email</p>
+                            <p>{{ $email }}</p>
+                            <p class="title">Địa chỉ</p>
+                            <p>{{ $address }}</p>
+                            <p class="title">Công việc</p>
+                            <p>{{ $job }}</p>
+                            <p class="title">Facebook</p>
+                            <p>{{ $job }}</p> 
+                            <p class="title">Zalo</p>
+                            <p>{{ $job }}</p>   
                           </div>
-
                           <br />
-                          <h5>Project files</h5>
+                          {{-- <h5>Project files</h5>
                           <ul class="list-unstyled project_files">
                             <li><a href=""><i class="fa fa-file-word-o"></i> Functional-requirements.docx</a>
                             </li>
@@ -167,11 +185,11 @@
                             <li><a href=""><i class="fa fa-file-word-o"></i> Contract-10_12_2014.docx</a>
                             </li>
                           </ul>
-                          <br />
+                          <br /> --}}
 
                           <div class="text-center mtop20">
-                            <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                            <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+                            <a href="#" class="btn btn-sm btn-primary">Cập nhật</a>
+                            {{-- <a href="#" class="btn btn-sm btn-warning"></a> --}}
                           </div>
                         </div>
 
