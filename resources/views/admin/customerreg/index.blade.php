@@ -10,7 +10,7 @@
       
       <!-- Custom Theme Style -->
       <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.8') }}" rel="stylesheet">
+      <link href="{{ asset('dashboard/production/css/custom.css?v=0.2.9') }}" rel="stylesheet">
       <!-- bootstrap-daterangepicker -->
       <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
       <!-- bootstrap-datetimepicker -->

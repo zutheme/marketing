@@ -272,3 +272,12 @@ ul.messages li .message_wrapper.comment {
     width: 100%;
     height: auto;
 }
+.info-number .badge {
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 13px;
+    padding: 2px 6px;
+    position: relative !important;
+    right: 2px;
+    top: -8px;
+}

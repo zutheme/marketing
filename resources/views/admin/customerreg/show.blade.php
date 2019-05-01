@@ -49,11 +49,11 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-
                   <div class="x_content">
                     @if(isset($detailpost))
                           @foreach($detailpost as $row)
-                            <?php $post = $row['body']; 
+                            <?php $idpostparent = $row['idpost'];
+                                  $post = $row['body']; 
                                   $firstname = $row['firstname']; 
                                   $mobile = $row['mobile'];
                                   $email= $row['email'];
@@ -82,7 +82,9 @@
 
                       {{-- <div id="mainb" style="height:350px;"></div> --}}
                       <div class="detail-post">
+                        @if(isset($post))
                       	{{ $post }} 
+                        @endif
                       </div>
                       <div>
 
@@ -112,6 +114,8 @@
                         <div class="x_panel">
                           <div class="x_title">
                             <h2>&nbsp;</h2>
+                            <input type="hidden" name="idpost" value="{{ $idpostparent }}">
+                             <input type="hidden" name="idimppost" value="{{ $idimppost }}">
                             @if(isset($post_type_inter))
                               <ul class="nav navbar-right panel_toolbox">
                                 @foreach($post_type_inter as $row)
@@ -126,7 +130,7 @@
                               <li>
                                 <img src="{{ asset('dashboard/production/images/img.jpg') }}" class="avatar" alt="Avatar">
                                 <div class="message_wrapper comment">
-                                  <textarea class="resizable_textarea form-control" placeholder="Ghi chú"></textarea>
+                                  <textarea name="body" class="resizable_textarea form-control" placeholder="Ghi chú"></textarea>
                                 </div>
                               </li>
                             </ul>
@@ -134,6 +138,9 @@
                           <ul class="nav navbar-right panel_toolbox">
                               <li><input class="btn btn-default" type="submit" name="submit-info" value="Xác nhận"></li>
                             </ul>
+                            @if(isset($errors))
+                              {{ $errors }}
+                            @endif
                         </div>
                         </form>                 
                         <!-- end of user messages -->

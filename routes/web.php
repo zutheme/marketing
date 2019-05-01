@@ -134,6 +134,12 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::get('admin/customerreg/listcustomerbycat/{_idcategory}/{_id_post_type}/{_id_status_type}', ['uses' =>'Admin\CustomerRegController@ListCustomerByCat', 'as'=>'admin']);
 	Route::post('admin/customerreg/listcustomerbycat/{_idcategory}/{_id_post_type}/{_id_status_type}', ['uses' =>'Admin\CustomerRegController@ListCustomerByCat', 'as'=>'admin']);
+
+	//show detail
+	Route::get('admin/customerreg/{_idimport}', ['uses' =>'Admin\CustomerRegController@show', 'as'=>'admin']);
+	Route::post('admin/customerreg/{_idimport}', ['uses' =>'Admin\CustomerRegController@show', 'as'=>'admin']);
+	//end show detail
+
 	Route::resource('admin/customerreg' , 'Admin\CustomerRegController', array('as'=>'admin') );
 
 	//post management

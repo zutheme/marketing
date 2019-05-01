@@ -67,7 +67,6 @@ class CustomerRegController extends Controller
      */
     public function show($idimppost)
     {
-
         $_namecattype="website";
         $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
         $catbytypes = json_decode(json_encode($rs_catbytype), true);
@@ -79,9 +78,8 @@ class CustomerRegController extends Controller
         $_idinter = 4;
         $rs_post_type_inter = DB::select('call ListPostTypeByIdcatProcedure(?)',array($_idinter));
         $post_type_inter = json_decode(json_encode($rs_post_type_inter), true);
-        return view('admin.customerreg.show',compact('post_type_inter','detailpost','catbytypes','activitys'));
+        return view('admin.customerreg.show',compact('post_type_inter','detailpost','catbytypes','activitys','idimppost'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -150,6 +148,7 @@ class CustomerRegController extends Controller
         $body = $request->get('body');
         $id_post_type = $request->get('sel_idposttype');
         $id_status_type = $request->get('id_status_type');
+
         $idemployee = Auth::id();
         try {
             $result = DB::select('call customer_interactive(?,?,?,?,?)',array($parent_idpost,$body, $id_post_type,$id_status_type,$idemployee));
@@ -195,6 +194,20 @@ class CustomerRegController extends Controller
     }
     public function interactive_customer(Request $request)
     {
+        //show detail
+        $idimppost = $request->get('idimppost');
+        $_namecattype="website";
+        $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+        $catbytypes = json_decode(json_encode($rs_catbytype), true);
+        $rsdetailInteractive = DB::select('call DetailInteractive(?)',array($idimppost));
+        $detailpost = json_decode(json_encode($rsdetailInteractive), true);
+
+        $rs_activity = DB::select('call activity_interactive(?)',array($idimppost));
+        $activitys = json_decode(json_encode($rs_activity), true);
+        $_idinter = 4;
+        $rs_post_type_inter = DB::select('call ListPostTypeByIdcatProcedure(?)',array($_idinter));
+        $post_type_inter = json_decode(json_encode($rs_post_type_inter), true);
+        //end detail
         $parent_idpost = $request->get('idpost');
         $body = $request->get('body');
         $id_post_type = $request->get('sel_idposttype');
@@ -202,13 +215,12 @@ class CustomerRegController extends Controller
         $idemployee = Auth::id();
         try {
             $result = DB::select('call customer_interactive(?,?,?,?,?)',array($parent_idpost,$body, $id_post_type,$id_status_type,$idemployee));
-            $cus_interactive = json_decode(json_encode($result), true);
-            $success = array('success'=>$cus_interactive);
-            return view('admin.customerreg.show',compact('message')); 
+            $success = json_decode(json_encode($result), true);
+            return redirect()->action('Admin\CustomerRegController@show', ['idimppost' => $idimppost]); 
         } catch (\Illuminate\Database\QueryException $ex) {
             $errors = new MessageBag(['error' => $ex->getMessage()]);
             return view('admin.customerreg.show',compact('errors'));
         }
-        return view('admin.customerreg.show',compact('message')); 
+        return redirect()->action('Admin\CustomerRegController@show', ['idimppost' => $idimppost]);  
     }
 }
