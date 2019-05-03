@@ -37,23 +37,25 @@
 
     </head>
 
-    <body class="login">
+    <body class="login"> 
     <div>
-      @if (session('status'))
-          <div class="alert alert-success" role="alert">
-              {{ session('status') }}
-          </div>
-      @endif
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
             <a href="#"><img src="{{ asset('dashboard/production/images/logo-thienkhue.png') }}"></a>
-            <form method="post" action="{{url('/login')}}">
+            <form method="post" action="{{url('login')}}">
               {{ csrf_field() }}
               <h1>Đăng nhập</h1>
-              
+              <div>
+                @if($errors->has('errorlogin'))
+                  <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{$errors->first('errorlogin')}}
+                  </div>
+                @endif
+              </div>
               <div>
                 <input type="email" name="email" class="form-control" placeholder="E-mail" required="" />
               </div>
@@ -63,7 +65,8 @@
               <div>
                 <input type="submit" class="btn btn-default submit" value="Xác nhận" />
                 <a class="reset_pass" href="#">Quên mật khẩu?</a>
-               
+              </div>
+
               <div class="clearfix"></div>
 
               <div class="separator">

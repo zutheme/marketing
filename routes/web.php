@@ -174,12 +174,12 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::resource('admin/permission','Admin\PermissionController', array('as'=>'admin'));
     Route::resource('admin/impperm','Admin\ImpPermController', array('as'=>'admin'));
     Route::resource('admin/grantperm','Admin\GrantController', array('as'=>'admin'));
+    //profile
+    //Route::post('profile/{$idprofile}' , 'ProfileController@show');
+	//Route::get('profile/{$idprofile}' , 'ProfileController@show');
 
-    // Route::resource('products','ProductController');
-
-    //Route::post('admin/postDiamond' , 'Admin\UploadDiamondController@postDiamond');
-
-	//Route::get('admin/postDiamond' , 'Admin\UploadDiamondController@postDiamond');
-
+    Route::get('profile/{$idprofile}', ['uses' =>'ProfileController@show']);
+	Route::post('profile/{$idprofile}', ['uses' =>'ProfileController@show']);
+	Route::resource('profile','ProfileController');
 });
 
