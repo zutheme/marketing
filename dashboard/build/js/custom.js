@@ -1160,25 +1160,25 @@ if (typeof NProgress != 'undefined') {
 			// Cropper
 			$image.on({
 			  'build.cropper': function (e) {
-				console.log(e.type);
+				//console.log(e.type);
 			  },
 			  'built.cropper': function (e) {
-				console.log(e.type);
+				//console.log(e.type);
 			  },
 			  'cropstart.cropper': function (e) {
-				console.log(e.type, e.action);
+				//console.log(e.type, e.action);
 			  },
 			  'cropmove.cropper': function (e) {
-				console.log(e.type, e.action);
+				//console.log(e.type, e.action);
 			  },
 			  'cropend.cropper': function (e) {
-				console.log(e.type, e.action);
+				//console.log(e.type, e.action);
 			  },
 			  'crop.cropper': function (e) {
-				console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
+				//console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
 			  },
 			  'zoom.cropper': function (e) {
-				console.log(e.type, e.ratio);
+				//console.log(e.type, e.ratio);
 			  }
 			}).cropper(options);
 
@@ -1250,7 +1250,7 @@ if (typeof NProgress != 'undefined') {
 					try {
 					  data.option = JSON.parse($target.val());
 					} catch (e) {
-					  console.log(e.message);
+					  //console.log(e.message);
 					}
 				  }
 				}
@@ -1281,7 +1281,7 @@ if (typeof NProgress != 'undefined') {
 				  try {
 					$target.val(JSON.stringify(result));
 				  } catch (e) {
-					console.log(e.message);
+					//console.log(e.message);
 				  }
 				}
 
@@ -1467,7 +1467,7 @@ if (typeof NProgress != 'undefined') {
 		function init_InputMask() {
 			
 			if( typeof ($.fn.inputmask) === 'undefined'){ return; }
-			console.log('init_InputMask');
+			//console.log('init_InputMask');
 			
 				$(":input").inputmask();
 				
@@ -1573,10 +1573,10 @@ if (typeof NProgress != 'undefined') {
 		function init_daterangepicker() {
 
 			if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
-			console.log('init_daterangepicker');
+			//console.log('init_daterangepicker');
 		
 			var cb = function(start, end, label) {
-			  console.log(start.toISOString(), end.toISOString(), label);
+			  //console.log(start.toISOString(), end.toISOString(), label);
 			  $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 			};
 
@@ -1622,16 +1622,16 @@ if (typeof NProgress != 'undefined') {
 			$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 			$('#reportrange').daterangepicker(optionSet1, cb);
 			$('#reportrange').on('show.daterangepicker', function() {
-			  console.log("show event fired");
+			  //console.log("show event fired");
 			});
 			$('#reportrange').on('hide.daterangepicker', function() {
-			  console.log("hide event fired");
+			  //console.log("hide event fired");
 			});
 			$('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-			  console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+			  //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
 			});
 			$('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
-			  console.log("cancel event fired");
+			  //console.log("cancel event fired");
 			});
 			$('#options1').click(function() {
 			  $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
@@ -1648,10 +1648,10 @@ if (typeof NProgress != 'undefined') {
 	   function init_daterangepicker_right() {
 	      
 				if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
-				console.log('init_daterangepicker_right');
+				//console.log('init_daterangepicker_right');
 		  
 				var cb = function(start, end, label) {
-				  console.log(start.toISOString(), end.toISOString(), label);
+				  //console.log(start.toISOString(), end.toISOString(), label);
 				  $('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 				};
 

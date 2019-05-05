@@ -17,6 +17,11 @@ class CreateTableProfile extends Migration
             $table->increments('idprofile');
             $table->string('iduser');
             $table->text('about')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('middlename')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('address')->nullable();
             $table->string('facebook')->nullable();
             $table->integer('zalo')->nullable();
             $table->string('url_avatar')->nullable();

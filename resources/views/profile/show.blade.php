@@ -1,35 +1,32 @@
 @extends('dashboard')
 @section('other_styles')
+    <!-- bootstrap-daterangepicker -->
+    <link href="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="{{ asset('dashboard/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="{{ asset('dashboard/vendors/normalize-css/normalize.css') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/vendors/ion.rangeSlider/css/ion.rangeSlider.css') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet">
+    <!-- Bootstrap Colorpicker -->
+    <link href="{{ asset('dashboard/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('dashboard/vendors/cropper/dist/cropper.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
       <!-- Custom Theme Style -->
     <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.5') }}" rel="stylesheet">
 @stop
 @section('content')
    <!-- page content -->  
-            <div class="page-title">
-              <div class="title_left">
-                <h3>User Profile</h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
             <div class="clearfix"></div>
-
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>User Report <small>Activity report</small></h2>
+                    <h2>Thông tin <small>tài khoản</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -63,60 +60,235 @@
                         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Họ <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Tên lót</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Giới tính</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <p></p><label>Nam:&nbsp;</label><input type="radio" class="flat form-control" name="sel_sex"  value="0"/>&nbsp;<label>Nữ:&nbsp;</label><input type="radio" class="flat form-control" name="sel_sex"  value="1"/>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Ngày sinh <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                          <div class="form-group">
+                                <div class='input-group date' id='myDatepicker2'>
+                                    <input type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                       <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                          </div>
+                          {{-- <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text"> --}}
                         </div>
-                      </div>
-                      <div class="ln_solid"></div>
+                      </div>         
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-primary" type="button">Cancel</button>
-						  <button class="btn btn-primary" type="reset">Reset</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <button class="btn btn-primary" type="button">Bỏ qua</button>
+                          <button type="submit" class="btn btn-success">Cập nhật</button>
                         </div>
                       </div>
-
                     </form>
+                    </div>
+                    <div class="ln_solid"></div>
+                      <!--change password-->
+                    <div class="profile_titles">
+                        <form class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu cũ</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input name="password1" type="password" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu mới</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input name="password1" type="password" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhập lại mật khẩu</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                             <input name="password2" type="password" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                              <button type="button" class="btn btn-primary">Cancel</button>
+                              <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                          </div>
+
+                        </form>
                       </div>
-   
+                      <!--end change password-->
+                       <div class="ln_solid"></div>
+                       <!--change password-->
+                    <div class="profile_titles">
+                        <form class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu cũ</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input name="password1" type="password" class="form-control" value="">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                              <button type="button" class="btn btn-primary">Cancel</button>
+                              <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                          </div>
+
+                        </form>
+                      </div>
+                      <!--end change password-->
+                      <div class="ln_solid"></div>
+                      <!--avatar-->
+                        <div class="cropper">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="img-container">
+                                <img id="image" src="{{ asset('dashboard/production/images/cropper.jpg') }}" alt="Picture">
+                              </div>
+                            </div>
+                            
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 docs-buttons">
+                              <!-- <h3 class="page-header">Toolbar:</h3> -->
+                             <div class="btn-group">                   
+                                <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                                  <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                                  <span class="docs-tooltip" data-toggle="tooltip" title="Import image with Blob URLs">
+                                    <span class="fa fa-upload"></span>
+                                  </span>
+                                </label>
+                              </div>
+                              <div class="btn-group">
+                                <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom In">
+                                  <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;zoom&quot;, 0.1)">
+                                    <span class="fa fa-search-plus"></span>
+                                  </span>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom Out">
+                                  <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;zoom&quot;, -0.1)">
+                                    <span class="fa fa-search-minus"></span>
+                                  </span>
+                                </button>
+                              </div>      
+                              <div class="btn-group btn-group-crop">
+                                <button type="button" class="btn btn-primary" data-method="getCroppedCanvas">
+                                  <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)">
+                                    Get Cropped Canvas
+                                  </span>
+                                </button>
+                            
+                              </div>
+                              <div class="btn-group">
+                                  <div class="docs-toggles">
+                                    <label class="btn btn-primary">
+                                      <input type="radio" class="sr-only" id="aspectRatio2" name="aspectRatio" value="1">
+                                      <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 1 / 1">
+                                        1:1
+                                      </span>
+                                    </label>
+                                  </div>
+                              </div>
+                              <!-- /.docs-toggles -->
+                              <!-- Show the cropped image in modal -->
+                              <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                      <h4 class="modal-title" id="getCroppedCanvasTitle">Cropped</h4>
+                                    </div>
+                                    <div class="modal-body"></div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.png">Download</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div><!-- /.modal -->
+                          </div>
+                        </div>
+                      </div>
+                      <!--end avatar -->
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
         <!-- /page content -->
 @stop
 
 @section('other_scripts')
+    <!-- bootstrap-daterangepicker -->
+    <script src="{{ asset('dashboard/vendors/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- bootstrap-datetimepicker -->    
+    <script src="{{ asset('dashboard/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <!-- Ion.RangeSlider -->
+    <script src="{{ asset('dashboard/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js') }}"></script>
+    <!-- Bootstrap Colorpicker -->
+    <script src="{{ asset('dashboard/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
+    <!-- jquery.inputmask -->
+    <script src="{{ asset('dashboard/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js') }}"></script>
+    <!-- jQuery Knob -->
+    <script src="{{ asset('dashboard/vendors/jquery-knob/dist/jquery.knob.min.js') }}"></script>
+    <!-- Cropper -->
+    <script src="{{ asset('dashboard/vendors/cropper/dist/cropper.min.js') }}"></script>
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/vendors/echarts/dist/echarts.min.js') }}"></script>
-    <script src="{{ asset('dashboard/build/js/custom.js') }}"></script> 
+    <script src="{{ asset('dashboard/build/js/custom.js?v=0.0.1') }}"></script>
+    <script>
+    //$('#myDatepicker').datetimepicker();
+    
+    $('#myDatepicker2').datetimepicker({
+        format: 'DD-MM-YYYY'
+    });
+    
+    // $('#myDatepicker3').datetimepicker({
+    //     format: 'hh:mm A'
+    // });
+    
+    // $('#myDatepicker4').datetimepicker({
+    //     ignoreReadonly: true,
+    //     allowInputToggle: true
+    // });
+
+    // $('#datetimepicker6').datetimepicker();
+    
+    // $('#datetimepicker7').datetimepicker({
+    //     useCurrent: false
+    // });
+    
+    // $("#datetimepicker6").on("dp.change", function(e) {
+    //     $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+    // });
+    
+    // $("#datetimepicker7").on("dp.change", function(e) {
+    //     $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+    // });
+</script>
 @stop

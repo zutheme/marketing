@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Department;
 use Illuminate\Support\Facades\DB;
+use App\profile;
 class AduserController extends Controller
 {
     /**
@@ -53,12 +54,18 @@ class AduserController extends Controller
             $errors = $validator->errors();
             return redirect()->route('admin.aduser.create')->with(compact('errors'));           
         }
-        $input = $request->all(); 
-        $input['password'] = bcrypt($input['password']); 
-        $user = User::create($input); 
-        $success['token'] =  $user->createToken('MyApp')->accessToken; 
-        $success['name'] =  $user->name;
-        $iduser = $user->id;
+        
+        try {
+            $input = $request->all(); 
+            $input['password'] = bcrypt($input['password']); 
+            $user = User::create($input); 
+            $success['token'] =  $user->createToken('MyApp')->accessToken; 
+            $success['name'] =  $user->name;
+            $iduser = $user->id;
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['error' => $ex->getMessage()]);
+            return redirect()->route('admin.aduser.create')->with('error',$errors);
+        }
         $message="";
         $values="";
         $list_checks = $request->input('list_check');
@@ -71,7 +78,10 @@ class AduserController extends Controller
         $values=rtrim($values,", ");
         $sql = $sql.$values;
         $result = DB::select($sql);
-        return redirect()->route('admin.aduser.index')->with('success',$sql);
+        $profile = new profile(['iduser'=> $iduser]);
+        $profile->save();
+        $idprofile = $profile->idprofile;
+        return redirect()->route('admin.aduser.index')->with('success',$sql.",idprofile".$idprofile);
     }
 
     /**
