@@ -20,15 +20,15 @@
 
 */
 
-// Route::get('/clear-cache', function() {
+Route::get('/clear-cache', function() {
 
 
 
-//     Artisan::call('cache:clear');
+    Artisan::call('cache:clear');
 
-//     return "Cache is cleared";
+    return "Cache is cleared";
 
-// });
+});
 
 //Route::resource('admin/aduser' , 'Admin\AduserController', array('as'=>'admin') );
 

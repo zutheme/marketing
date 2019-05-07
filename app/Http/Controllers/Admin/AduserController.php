@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User; 
 use Illuminate\Support\Facades\Auth; 
 use Validator;
+use Illuminate\Support\MessageBag;
 use App\Department;
 use Illuminate\Support\Facades\DB;
 use App\profile;
@@ -64,7 +65,8 @@ class AduserController extends Controller
             $iduser = $user->id;
         } catch (\Illuminate\Database\QueryException $ex) {
             $errors = new MessageBag(['error' => $ex->getMessage()]);
-            return redirect()->route('admin.aduser.create')->with('error',$errors);
+            //return redirect()->route('admin.aduser.create')->with('error',$errors);
+            return redirect()->route('admin.aduser.create')->with(compact('errors'));
         }
         $message="";
         $values="";
@@ -78,10 +80,18 @@ class AduserController extends Controller
         $values=rtrim($values,", ");
         $sql = $sql.$values;
         $result = DB::select($sql);
-        $profile = new profile(['iduser'=> $iduser]);
-        $profile->save();
-        $idprofile = $profile->idprofile;
-        return redirect()->route('admin.aduser.index')->with('success',$sql.",idprofile".$idprofile);
+        $firstname = "";
+        $middlename = "";
+        $lastname = "";
+        $address = "";
+        $mobile = "";
+        $about = "";
+        $facebook = "";
+        $zalo = "";
+        $url_avatar = "";
+        $creat_profile_pr = DB::select('call CreateProfleProcedure(?,?,?,?,?,?,?,?,?,?)',array($iduser,$firstname,$middlename,$lastname,$address,$mobile,$about,$facebook,$zalo,$url_avatar));
+        $profile = json_decode(json_encode($creat_profile_pr), true);    
+        return redirect()->route('admin.aduser.index')->with(compact('profile'));
     }
 
     /**
