@@ -89,9 +89,10 @@ class AduserController extends Controller
         $facebook = "";
         $zalo = "";
         $url_avatar = "";
-        $creat_profile_pr = DB::select('call CreateProfleProcedure(?,?,?,?,?,?,?,?,?,?)',array($iduser,$firstname,$middlename,$lastname,$address,$mobile,$about,$facebook,$zalo,$url_avatar));
-        $profile = json_decode(json_encode($creat_profile_pr), true);    
-        return redirect()->route('admin.aduser.index')->with(compact('profile'));
+        $creat_profile_pr = DB::select('call CreateProfileProcedure(?,?,?,?,?,?,?,?,?,?)',array($iduser,$firstname,$middlename,$lastname,$address,$mobile,$about,$facebook,$zalo,$url_avatar));
+        $profile = json_decode(json_encode($creat_profile_pr), true);
+        $idfile = $profile[0]['idprofile'];    
+        return redirect()->route('admin.aduser.index')->with(compact('idfile'));
     }
 
     /**
@@ -154,8 +155,16 @@ class AduserController extends Controller
      */
     public function destroy($id)
     {
-        $users = User::find($id);
-        $users->delete();
+        //$users = User::find($id);
+        //$users->delete();
+        try {
+            $qr_delete_user = DB::select('call DeleteUserProcedure(?)',array($id));
+            $rs_delete_user = json_decode(json_encode($qr_delete_user), true);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['error' => $ex->getMessage()]);
+            //return redirect()->route('admin.aduser.create')->with('error',$errors);
+            return redirect()->route('admin.aduser.create')->with(compact('errors'));
+        }       
         return redirect()->route('admin.aduser.index')->with('success','record have deleted');
     }
     

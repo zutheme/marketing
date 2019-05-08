@@ -45,7 +45,9 @@ class ProfileController extends Controller
      */
     public function show($idprofile)
     {
-        return view('profile.show',compact('idprofile'));
+        $qr_select_profile = DB::select('call SelectProfileProcedure(?)',array($iduser));
+        $profile = json_decode(json_encode($qr_select_profile), true);
+        return view('profile.show',compact('profile'));
     }
 
     /**

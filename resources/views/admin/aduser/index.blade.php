@@ -26,6 +26,9 @@
                   <a href="{{url('/logout')}}" class="btn btn-primary">logout</a>
               @endif
 	        <h4 class="card-title">Thông tin đăng ký</h4>
+	        @if(isset($errors))
+	        	{{ $errors }}
+			@endif
 	        @if($message = Session::get('success'))
 	        	<h6 class="card-subtitle">{{ $message }}</h6>
 			@endif
