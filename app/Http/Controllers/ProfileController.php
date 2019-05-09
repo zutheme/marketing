@@ -113,4 +113,36 @@ class ProfileController extends Controller
     {
         //
     }
+    public function changepassword(Request $request,$iduser){
+        
+        $_namecattype="website";
+        $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+        $catbytypes = json_decode(json_encode($rs_catbytype), true);
+        //update profile
+        $users = user::find($id);
+        $old_password = $request->get("old_password");
+        $old_password = bcrypt($old_password);
+        $password = $users->password;
+        if($old_password!=$password){
+            $errorspass = "old password not correct";
+            //return view('profile.show',compact('profile','catbytypes','iduser','errorspass'));
+            return redirect()->route('profile.show')->with(compact('profile','catbytypes','iduser','errorspass'));
+        }
+        $validator = Validator::make($request->all(), [ 
+            'password' => 'required', 
+            'c_password' => 'required|same:password', 
+        ]);
+        if ($validator->fails()) { 
+            $errorspass = $validator->errors();
+            return redirect()->route('profile.show')->with(compact('errorspass'));           
+        }
+        $input = $request->all(); 
+        $input['password'] = bcrypt($input['password']); 
+        $users->password =  $input['password'];
+        $users->save();
+        
+        $qr_select_profile = DB::select('call SelectProfileProcedure(?)',array($iduser));
+        $profile = json_decode(json_encode($qr_select_profile), true);
+        return view('profile.show',compact('profile','catbytypes','iduser'));
+    }
 }

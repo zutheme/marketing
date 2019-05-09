@@ -170,10 +170,10 @@ Route::group(['middleware' => ['auth']], function() {
     //Route::post('profile/{$idprofile}' , 'ProfileController@show');
 	//Route::get('profile/{$idprofile}' , 'ProfileController@show');
 
-    Route::get('profile/{$idprofile}', ['uses' =>'ProfileController@show']);
-	Route::post('profile/{$idprofile}', ['uses' =>'ProfileController@show']);
-	Route::get('updateprofile/{$idprofile}', ['uses' =>'ProfileController@update']);
-	Route::post('updateprofile/{$idprofile}', ['uses' =>'ProfileController@update']);
+    Route::get('profile/{$iduser}', ['uses' =>'ProfileController@show']);
+	Route::post('profile/{$iduser}', ['uses' =>'ProfileController@show']);
+	//Route::get('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
+	//Route::post('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
 	Route::resource('profile','ProfileController');
 });
 

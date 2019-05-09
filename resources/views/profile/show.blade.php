@@ -137,23 +137,28 @@
                     <div class="ln_solid"></div>
                       <!--change password-->
                     <div class="profile_titles">
-                        <form class="form-horizontal form-label-left">
+                        <form method="post" action="{{ url('changepassword/'.$iduser) }}" class="form-horizontal form-label-left">
+                          {{ csrf_field() }}
+                          @if(isset ($errorspass))
+                              {{ $errorspass }}
+                          @endif
+                          <input type="hidden" name="_method" value="PATCH">
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu cũ</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                              <input name="password1" type="password" class="form-control" value="">
+                              <input name="old_password" type="password" class="form-control" value="">
                             </div>
                           </div>
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu mới</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                              <input name="password1" type="password" class="form-control" value="">
+                              <input name="password" type="password" class="form-control" value="">
                             </div>
                           </div>
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Nhập lại mật khẩu</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                             <input name="password2" type="password" class="form-control" value="">
+                             <input name="c_password" type="password" class="form-control" value="">
                             </div>
                           </div>
                           <div class="form-group">
