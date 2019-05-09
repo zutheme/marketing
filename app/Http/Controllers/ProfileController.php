@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ProfileController extends Controller
 {
     /**
@@ -43,11 +43,19 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($idprofile)
+    public function show($iduser)
     {
+        try {
+            $_namecattype="website";
+            $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+            $catbytypes = json_decode(json_encode($rs_catbytype), true);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+            return redirect()->route('profile.show')->with('error',$errors);
+        }
         $qr_select_profile = DB::select('call SelectProfileProcedure(?)',array($iduser));
         $profile = json_decode(json_encode($qr_select_profile), true);
-        return view('profile.show',compact('profile'));
+        return view('profile.show',compact('profile','catbytypes'));
     }
 
     /**
@@ -68,9 +76,29 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idprofile)
     {
-        //
+        try {
+            $_namecattype="website";
+            $rs_catbytype = DB::select('call ListAllCatByTypeProcedure(?)',array($_namecattype));
+            $catbytypes = json_decode(json_encode($rs_catbytype), true);
+            //update profile
+            $_firstname = $request->get('firstname');
+            $_lastname = $request->get('lastname');
+            $_middlename = $request->get('middlename');
+            $_sel_sex = $request->get('sel_sex');
+            $_birthday = $request->get('_birthday');
+            $address = $request->get('address');
+            $mobile = $request->get('mobile');
+            $qr_update_profile = DB::select('call UpdateProfileProcedure(?,?,?,?,?,?,?,?)',array($idprofile,$_firstname,$_lastname,$_middlename,$_sel_sex,$_birthday,$address,$mobile));
+            $rs_update_profile = json_decode(json_encode($qr_update_profile), true);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+            return redirect()->route('profile.show')->with('error',$errors);
+        }
+        $qr_select_profile = DB::select('call SelectProfileByIdProcedure(?)',array($idprofile));
+        $profile = json_decode(json_encode($qr_select_profile), true);
+        return view('profile.show',compact('profile','catbytypes'));
     }
 
     /**

@@ -20,7 +20,18 @@
     <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.5') }}" rel="stylesheet">
 @stop
 @section('content')
-   <!-- page content -->  
+   <!-- page content --> 
+            <?php foreach($profile as $row) {
+                  $idprofile = $row["idprofile"];
+                  $firstname = $row["firstname"];
+                  $lastname = $row['lastname'];
+                  $middlename = $row['middlename'];
+                  $sel_sex = $row['sex'];
+                  $birthday = $row['birthday'];
+                  $address = $row['address'];
+                  $mobile = $row['mobile'];
+                  echo "<script> var birthday='".$birthday."'</script>";
+               } ?>
             <div class="clearfix"></div>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -55,34 +66,33 @@
                  
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-
                       <div class="profile_titles">
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
+                      <form id="demo-form2" method="post" action="{{ url('updateprofile/'.$idprofile) }}" data-parsley-validate class="form-horizontal form-label-left">
+                        {{ csrf_field() }}
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" name="firstname" values="{{ $profile->firstname }}" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="firstname" value="{{ $firstname }}" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Họ <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" name="lastname" value="{{ {{ $profile->lastname }} }}" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" name="lastname" value="{{ $lastname }}" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Tên lót</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input name="middlename" values="{{ $profile->middlename }}" class="form-control col-md-7 col-xs-12" type="text">
+                          <input name="middlename" value="{{ $middlename }}" class="form-control col-md-7 col-xs-12" type="text">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Giới tính</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <p></p><label>Nam:&nbsp;</label><input type="radio" class="flat form-control" name="sel_sex"  value="0"/>&nbsp;<label>Nữ:&nbsp;</label><input type="radio" class="flat form-control" name="sel_sex"  value="1"/>
+                          <p></p><label>Nữ:&nbsp;</label><input type="radio" class="flat form-control" name="sel_sex"  value="0" {{ $sel_sex == 0  ? 'checked="" required' : '' }}/>&nbsp;<label>Nam:&nbsp;</label><input type="radio" class="flat form-control" name="sel_sex"  value="1" {{ $sel_sex == 1  ? 'checked="" required' : '' }}/>
                         </div>
                       </div>
                       <div class="form-group">
@@ -91,13 +101,26 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <div class="form-group">
                                 <div class='input-group date' id='myDatepicker2'>
-                                    <input type='text' class="form-control" />
+                                    <input type='text' name="birthday" value="{{ $birthday }}" class="form-control" />
                                     <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
+                                 <input type='hidden' name="_birthday" value="{{ $birthday }}" class="form-control" />
                           </div>
                           {{-- <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text"> --}}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Điện thoại</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input name="mobile" value="{{ $mobile }}" class="form-control col-md-7 col-xs-12" type="text">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Địa chỉ</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input name="address" value="{{ $address }}" class="form-control col-md-7 col-xs-12" type="text">
                         </div>
                       </div>         
                       <div class="form-group">
@@ -260,35 +283,11 @@
     <script src="{{ asset('dashboard/vendors/cropper/dist/cropper.min.js') }}"></script>
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/vendors/echarts/dist/echarts.min.js') }}"></script>
-    <script src="{{ asset('dashboard/build/js/custom.js?v=0.0.1') }}"></script>
-    <script>
-    //$('#myDatepicker').datetimepicker();
-    
-    $('#myDatepicker2').datetimepicker({
-        format: 'DD-MM-YYYY'
-    });
-    
-    // $('#myDatepicker3').datetimepicker({
-    //     format: 'hh:mm A'
-    // });
-    
-    // $('#myDatepicker4').datetimepicker({
-    //     ignoreReadonly: true,
-    //     allowInputToggle: true
-    // });
-
-    // $('#datetimepicker6').datetimepicker();
-    
-    // $('#datetimepicker7').datetimepicker({
-    //     useCurrent: false
-    // });
-    
-    // $("#datetimepicker6").on("dp.change", function(e) {
-    //     $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    // });
-    
-    // $("#datetimepicker7").on("dp.change", function(e) {
-    //     $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-    // });
-</script>
+    <script src="{{ asset('dashboard/build/js/custom.js?v=0.0.2') }}"></script>
+    <script src="{{ asset('dashboard/production/js/custom.js?v=0.2.2') }}"></script>
+    <script type="text/javascript">
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });   
+    </script>
 @stop

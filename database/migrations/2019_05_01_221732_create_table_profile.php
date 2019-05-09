@@ -20,6 +20,7 @@ class CreateTableProfile extends Migration
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('lastname')->nullable();
+            $table->string('birthday')->nullable();
             $table->string('mobile')->nullable();
             $table->string('address')->nullable();
             $table->string('facebook')->nullable();

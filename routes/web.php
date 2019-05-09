@@ -172,6 +172,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('profile/{$idprofile}', ['uses' =>'ProfileController@show']);
 	Route::post('profile/{$idprofile}', ['uses' =>'ProfileController@show']);
+	Route::get('updateprofile/{$idprofile}', ['uses' =>'ProfileController@update']);
+	Route::post('updateprofile/{$idprofile}', ['uses' =>'ProfileController@update']);
 	Route::resource('profile','ProfileController');
 });
 
