@@ -172,8 +172,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('profile/{$iduser}', ['uses' =>'ProfileController@show']);
 	Route::post('profile/{$iduser}', ['uses' =>'ProfileController@show']);
-	//Route::get('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
-	//Route::post('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
+	Route::get('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
+	Route::post('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
 	Route::resource('profile','ProfileController');
 });
 

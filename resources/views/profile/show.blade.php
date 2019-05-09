@@ -142,7 +142,7 @@
                           @if(isset ($errorspass))
                               {{ $errorspass }}
                           @endif
-                          <input type="hidden" name="_method" value="PATCH">
+                          {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu cũ</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
