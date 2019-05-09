@@ -24,7 +24,7 @@
 				<p>{{ \Session::get('success') }}</p>
 			</div>
 		@endif
-		<form method="post" action="{{action('Admin\AduserController@update',$id)}}">
+		<form method="post" action="{{ action('Admin\AduserController@update',$id) }}">
 			{{ csrf_field() }}
 			<input type="hidden" name="_method" value="PATCH">
 			<div class="form-group">

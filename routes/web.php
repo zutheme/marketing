@@ -42,7 +42,7 @@ Route::get('/', function () {
 	if (Auth::check()) {
 	    $user = Auth::user();  
 	    return redirect()->route('admin.post.index')->with('success',$user->name);
-	    return view('admin.post.index');
+	    //return view('admin.post.index');
 	} else {
 		//return route('login');
 	    return redirect('login');

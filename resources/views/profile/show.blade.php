@@ -21,6 +21,7 @@
 @stop
 @section('content')
    <!-- page content --> 
+
             <?php foreach($profile as $row) {
                   $idprofile = $row["idprofile"];
                   $firstname = $row["firstname"];
@@ -67,8 +68,10 @@
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
                       <div class="profile_titles">
-                      <form id="demo-form2" method="post" action="{{ url('updateprofile/'.$idprofile) }}" data-parsley-validate class="form-horizontal form-label-left">
+                      <form id="demo-form2" method="post" action="{{ action('ProfileController@update',$iduser) }}" data-parsley-validate class="form-horizontal form-label-left">
                         {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="idprofile" value="{{ $idprofile }}">
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên <span class="required">*</span>
                         </label>
