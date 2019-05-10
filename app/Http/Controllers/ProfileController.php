@@ -191,9 +191,10 @@ class ProfileController extends Controller
                         $idinserteds = DB::select('call InsertFilesProcedure(?,?,?,?)',array($path_relative,$orfilename,$filename,$typefile));
                         $idinserted = json_decode(json_encode($idinserteds), true);
                         //$_idfile = $idinserted[0]['idfile'];
-                        $qr_uploadavatar = DB::select('call UploadAvatarProcedure(?)',array($idprofile));
-                        $rs_uploadavatar = json_decode(json_encode($qr_uploadavatar), true);
-                       return redirect('profile/'.$iduser)->with('status', $path_relative);
+                        $qr_uploadavatar = DB::select('call UploadAvatarProcedure(?,?)',array($idprofile,$path_relative));
+                        //$rs_uploadavatar = json_decode(json_encode($qr_uploadavatar), true);
+                        $erroravatar = "Avartar uploaded";
+                       return redirect('profile/'.$iduser)->with('uploadavatar', $erroravatar);
                     } catch (\Illuminate\Database\QueryException $ex) {
                         $erroravatar = new MessageBag(['errorlogin' => $ex->getMessage()]);
                         return redirect('profile/'.$iduser)->with('uploadavatar', $erroravatar);
