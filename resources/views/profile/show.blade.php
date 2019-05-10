@@ -135,13 +135,18 @@
                     </form>
                     </div>
                     <div class="ln_solid"></div>
+                      @if (session('status'))
+                          <div class="alert alert-success">
+                              {{ session('status') }}
+                          </div>
+                      @endif
                       <!--change password-->
+                       @if (isset($errorpass))
+                              {{ $errorpass }}
+                       @endif
                     <div class="profile_titles">
-                        <form method="post" action="{{ url('changepassword/'.$iduser) }}" class="form-horizontal form-label-left">
-                          {{ csrf_field() }}
-                          @if(isset ($errorspass))
-                              {{ $errorspass }}
-                          @endif
+                          <form method="post" action="{{ url('profile/changepassword/'.$iduser) }}" class="form-horizontal form-label-left">
+                          {{ csrf_field() }}                     
                           {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                           <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu cũ</label>
@@ -163,28 +168,8 @@
                           </div>
                           <div class="form-group">
                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                              <button type="button" class="btn btn-primary">Cancel</button>
-                              <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                          </div>
-
-                        </form>
-                      </div>
-                      <!--end change password-->
-                       <div class="ln_solid"></div>
-                       <!--change password-->
-                    <div class="profile_titles">
-                        <form class="form-horizontal form-label-left">
-                          <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Mật khẩu cũ</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                              <input name="password1" type="password" class="form-control" value="">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                              <button type="button" class="btn btn-primary">Cancel</button>
-                              <button type="submit" class="btn btn-success">Submit</button>
+                              <button type="button" class="btn btn-primary">Bỏ qua</button>
+                              <button type="submit" class="btn btn-success">Cập nhật</button>
                             </div>
                           </div>
 
@@ -193,6 +178,11 @@
                       <!--end change password-->
                       <div class="ln_solid"></div>
                       <!--avatar-->
+                        @if (session('uploadavatar'))
+                          <div class="alert alert-success">
+                              {{ session('uploadavatar') }}
+                          </div>
+                        @endif
                         <div class="cropper">
                           <div class="row">
                             <div class="col-md-12">
@@ -228,12 +218,12 @@
                               <div class="btn-group btn-group-crop">
                                 <button type="button" class="btn btn-primary" data-method="getCroppedCanvas">
                                   <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)">
-                                    Get Cropped Canvas
+                                    Cắt ảnh
                                   </span>
                                 </button>
                             
                               </div>
-                              <div class="btn-group">
+                              {{-- <div class="btn-group">
                                   <div class="docs-toggles">
                                     <label class="btn btn-primary">
                                       <input type="radio" class="sr-only" id="aspectRatio2" name="aspectRatio" value="1">
@@ -242,7 +232,7 @@
                                       </span>
                                     </label>
                                   </div>
-                              </div>
+                              </div> --}}
                               <!-- /.docs-toggles -->
                               <!-- Show the cropped image in modal -->
                               <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
@@ -254,8 +244,13 @@
                                     </div>
                                     <div class="modal-body"></div>
                                     <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                      <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.png">Download</a>
+                                      <form method="post" action="{{ url('profile/uploadavatar/'.$iduser) }}">
+                                        {{ csrf_field() }}
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                       {{--  <a id="download" href="javascript:void(0);"></a> --}}
+                                        <input id="download" type="hidden" name="download" value="">
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                      </form>
                                     </div>
                                   </div>
                                 </div>
@@ -291,7 +286,7 @@
     <script src="{{ asset('dashboard/vendors/cropper/dist/cropper.min.js') }}"></script>
     {{-- <script src="{{ asset('dashboard/build/js/custom.min.js') }}"></script> --}}
     <script src="{{ asset('dashboard/vendors/echarts/dist/echarts.min.js') }}"></script>
-    <script src="{{ asset('dashboard/build/js/custom.js?v=0.0.2') }}"></script>
+    <script src="{{ asset('dashboard/build/js/custom.js?v=0.0.8') }}"></script>
     <script src="{{ asset('dashboard/production/js/custom.js?v=0.2.2') }}"></script>
     <script type="text/javascript">
         $('#myDatepicker2').datetimepicker({

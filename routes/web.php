@@ -167,13 +167,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('admin/impperm','Admin\ImpPermController', array('as'=>'admin'));
     Route::resource('admin/grantperm','Admin\GrantController', array('as'=>'admin'));
     //profile
-    //Route::post('profile/{$idprofile}' , 'ProfileController@show');
-	//Route::get('profile/{$idprofile}' , 'ProfileController@show');
-
-    Route::get('profile/{$iduser}', ['uses' =>'ProfileController@show']);
-	Route::post('profile/{$iduser}', ['uses' =>'ProfileController@show']);
-	Route::get('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
-	Route::post('changepassword/{$iduser}', ['uses' =>'ProfileController@changepassword']);
+    Route::post('profile/uploadavatar/{iduser}/{idprofile}',['uses' =>'ProfileController@uploadavatar']);
+	Route::get('profile/uploadavatar/{iduser}/{idprofile}',['uses' =>'ProfileController@uploadavatar']);
+    Route::get('profile/{iduser}', ['uses' =>'ProfileController@show']);
+	Route::post('profile/{iduser}', ['uses' =>'ProfileController@show']);
+	Route::get('profile/changepassword/{iduser}', ['uses' =>'ProfileController@changepassword']);
+	Route::post('profile/changepassword/{iduser}', ['uses' =>'ProfileController@changepassword']);
 	Route::resource('profile','ProfileController');
 });
 
