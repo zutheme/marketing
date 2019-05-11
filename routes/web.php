@@ -87,7 +87,9 @@ Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@getLogin']
 Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@postLogin']);
 //Route::post('login','Auth\LoginController@postLogin');
 Route::get('logout','Auth\LoginController@logout');
+
 Route::group(['middleware' => ['auth']], function() {
+	
 
 	Route::resource('svcustomer','SvCustomerController');
 

@@ -47,7 +47,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{ asset('dashboard/production/images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                <img src="{{ asset($url_avatar) }}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>

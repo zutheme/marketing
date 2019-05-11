@@ -47,7 +47,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <a href="/marketing/profile/{{ Auth::id() }}"><img src="{{ asset('dashboard/production/images/img.jpg') }}" alt="..." class="img-circle profile_img"></a>
+                <a href="/marketing/profile/{{ Auth::id() }}"><img src="{{ asset($url_avatar) }}" alt="..." class="img-circle profile_img"></a>
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -59,9 +59,18 @@
             <!-- /menu profile quick info -->
 
             <br />
-
+            @if (session('menu'))
+                <div class="alert alert-success">
+                    {{ session('menu') }}
+                </div>
+             @endif
+              @if (isset($menu))
+                <div class="alert alert-success">
+                    {{ $menu }}
+                </div>
+             @endif
             <!-- sidebar menu -->
-            @include('admin.sidebar');
+            @include('sidebar');
             <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
@@ -84,7 +93,7 @@
         </div>
 
         <!-- top navigation -->
-        @include('admin.topnav');
+        @include('topnav');
         <!-- /top navigation -->
          <!-- page content -->
         <div class="right_col" role="main"> 

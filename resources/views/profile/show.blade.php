@@ -31,8 +31,11 @@
                   $birthday = $row['birthday'];
                   $address = $row['address'];
                   $mobile = $row['mobile'];
+                  $url_avatar = $row['url_avatar'];
                   echo "<script> var birthday='".$birthday."'</script>";
-               } ?>
+               }
+               $url_avartar_sex = ($sel_sex == 0) ? 'dashboard/production/images/avatar/avatar-female.jpg' : 'dashboard/production/images/avatar/avatar-male.jpg';
+               $url_avatar = (strlen($url_avatar) > 0) ? $url_avatar : $url_avartar_sex; ?>
             <div class="clearfix"></div>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -61,7 +64,7 @@
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="{{ asset('dashboard/production/images/picture.jpg') }}" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{ asset($url_avatar) }}" alt="Avatar" title="Change the avatar">
                         </div>
                       </div>
                  
@@ -135,11 +138,7 @@
                     </form>
                     </div>
                     <div class="ln_solid"></div>
-                      @if (session('status'))
-                          <div class="alert alert-success">
-                              {{ session('status') }}
-                          </div>
-                      @endif
+                      
                       <!--change password-->
                        @if (isset($errorpass))
                               {{ $errorpass }}
@@ -182,12 +181,12 @@
                           <div class="alert alert-success">
                               {{ session('uploadavatar') }}
                           </div>
-                        @endif
+                        @endif                 
                         <div class="cropper">
                           <div class="row">
                             <div class="col-md-12">
                               <div class="img-container">
-                                <img id="image" src="{{ asset('dashboard/production/images/cropper.jpg') }}" alt="Picture">
+                                <img id="image" src="{{ asset($url_avatar) }}" alt="Picture">
                               </div>
                             </div>
                             
@@ -244,7 +243,7 @@
                                     </div>
                                     <div class="modal-body"></div>
                                     <div class="modal-footer">
-                                      <form method="post" action="{{ url('profile/uploadavatar/'.$iduser) }}">
+                                      <form method="post" action="{{ url('profile/uploadavatar/'.$iduser.'/'.$idprofile) }}">
                                         {{ csrf_field() }}
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                        {{--  <a id="download" href="javascript:void(0);"></a> --}}

@@ -1,5 +1,14 @@
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-
+              @if (session('menu'))
+                <div class="alert alert-success">
+                    {{ session('menu') }}
+                </div>
+             @endif
+              @if (isset($menu))
+                <div class="alert alert-success">
+                    {{ $menu }}
+                </div>
+             @endif
               <div class="menu_section">
 
                 <h3>Tổng hợp</h3>

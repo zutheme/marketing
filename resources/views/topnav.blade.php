@@ -8,7 +8,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('dashboard/production/images/img.jpg') }}" alt=""> 
+                    <img src="{{ asset($url_avatar) }}" alt=""> 
                     @if (Auth::check()) 
                      {{ Auth::user()->name }} 
                     @endif
@@ -38,7 +38,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="{{ asset('dashboard/production/images/img.jpg') }}" alt="Profile Image" /></span>
+                        <span class="image"><img src="{{ asset($url_avatar) }}" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -50,7 +50,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="{{ asset('dashboard/production/images/img.jpg') }}" alt="Profile Image" /></span>
+                        <span class="image"><img src="{{ asset($url_avatar) }}" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -62,7 +62,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="{{ asset('dashboard/production/images/img.jpg') }}" alt="Profile Image" /></span>
+                        <span class="image"><img src="{{ asset($url_avatar) }}" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -74,7 +74,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="{{ asset('dashboard/production/images/img.jpg') }}" alt="Profile Image" /></span>
+                        <span class="image"><img src="{{ asset($url_avatar) }}" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
