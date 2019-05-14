@@ -13,7 +13,7 @@ class CreatPostApiProcedure extends Migration
      */
     public function up()
     {
-        DB::unprepared('CREATE PROCEDURE CreatPostApiProcedure(IN _namecat VARCHAR(255), IN _body VARCHAR(255), IN _nametype VARCHAR(255), IN _idfile INT(11), IN _firstname VARCHAR(255), IN _mobile VARCHAR(255), IN _email VARCHAR(255), IN _address VARCHAR(255), IN _name_status_type VARCHAR(250))
+        DB::unprepared('CREATE PROCEDURE CreatPostApiProcedure(IN _namecat VARCHAR(255), IN _body text, IN _nametype VARCHAR(255), IN _idfile INT(11), IN _firstname VARCHAR(255), IN _mobile VARCHAR(255), IN _email VARCHAR(255), IN _address VARCHAR(255), IN _name_status_type VARCHAR(250))
             BEGIN
             DECLARE _idcategory INT;
             DECLARE _idposttype INT;

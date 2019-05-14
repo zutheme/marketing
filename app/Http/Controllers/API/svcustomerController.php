@@ -258,7 +258,126 @@ class svcustomerController extends Controller
         return response()->json(['error'=>$errors],401);       
 
     }
-    public function consultant(Request $request)
+    
+
+   public function consultant(Request $request) {
+        if (isset($_SERVER["HTTP_ORIGIN"]) === true) {
+            $origin = $_SERVER["HTTP_ORIGIN"];
+            $allowed_origins = array(
+                "https://thammyvienthienkhue.vn",
+                "http://thammyvienthienkhue.vn",
+                "https://mgk.edu.vn",
+                "http://mgk.edu.vn",
+                "http://phuntheuthammykovibe.vn",
+                "http://mgkgroup.vn",
+                "http://localhost"
+            );
+            if (in_array($origin, $allowed_origins, true) === true) {
+                header('Access-Control-Allow-Origin: ' . $origin);
+                header('Access-Control-Allow-Credentials: true');
+                header('Access-Control-Allow-Methods: POST');
+                header('Access-Control-Allow-Headers: Content-Type');
+                
+                        $input = json_decode(file_get_contents('php://input'),true);
+                        $base64_string = $input['file'];       
+                        $_namecat = $input['namecat'];
+                        $_body = $input['body'];
+                        $_typepost = $input['typepost'];
+                        $_firstname = $input['firstname'];
+                        $_mobile = $input['mobile'];
+                        $_email = $input['email'];
+                        $_address = $input['address'];
+                        $_name_status_type = $input['name_status_type'];
+                        //if have exist file
+                        $_idfile = 0;
+                        $path_relative = "";                                    
+                        if($base64_string!="nofile"){
+                                $orfilename = $input['orfilename'];
+                                $dir = 'uploads/';
+                                $data = explode( ',', $base64_string );
+                                $mimeString = $data[0];
+                                $mimeString = explode( ':', $mimeString);
+                                $mimeString = explode( ';', $mimeString[1]);
+                                $extension =  explode( '/', $mimeString[0]);
+                                $data1 = $data[1];
+                                $decoded = base64_decode($data1);   
+                                $typefile = $extension[1];
+                                $path = base_path($dir . date('Y') . '/'.date('m').'/'.date('d').'/');
+                                $path_relative = $dir . date('Y') . '/'.date('m').'/'.date('d').'/';
+                                if(!File::exists($path)) {
+                                    File::makeDirectory($path, 0777, true, true);
+                                }     
+                                $filename = date('Ymd').'_'.time().'_'.uniqid().'.'.$typefile;
+                                file_put_contents( $path.$filename , $decoded);
+                                $errors = "";
+                                try {
+                                        $idinserteds = DB::select('call InsertFilesProcedure(?,?,?,?)',array($path_relative,$orfilename,$filename,$typefile));
+                                        $idinserted = json_decode(json_encode($idinserteds), true);
+                                        $_idfile = $idinserted[0]['idfile'];
+                                        //return response()->json(array('success' => true, 'id_inserted' => $idinserted ), 200);
+                                    } catch (\Illuminate\Database\QueryException $ex) {
+                                        $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+                                        return response()->json(array('error' => true, 'error' => $errors), 200);
+                                    }
+                        }
+                        //end if have file                      
+                        // $svcustomer = new sv_customer(['firstname'=>$_fullname ,'lastname'=>'','email'=>$_email,'mobile'=>$_phone ,'address'=>$_address,'job'=>$_job,'note'=>$path_relative]);
+                        // $svcustomer->save();
+                        // return response()->json(array('success' => true, 'firstname' => $svcustomer->firstname), 200);
+                         try {
+                                $idinserteds = DB::select('call CreatPostApiProcedure(?,?,?,?,?,?,?,?,?)',array($_namecat,$_body,$_typepost,$_idfile,$_firstname,$_mobile,$_email,$_address,$_name_status_type));
+                                $idinserted = json_decode(json_encode($idinserteds), true);
+                                $id_imppost = $idinserted[0]['_id_imppost'];
+                                return response()->json(array('success' => true, 'id_inserted' => $id_imppost,'firstname'=>$_firstname), 200);
+                            } catch (\Illuminate\Database\QueryException $ex) {
+                                $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+                                return response()->json(array('error' => true, 'error' => $errors), 200);
+                            }
+                    } //end allow header
+                    if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+                        //exit; // OPTIONS request wants only the policy, we can stop here
+                    }
+                }
+                $errors['error'] = "error access control allow headers";
+                return response()->json(['error'=>$errors],401);       
+    }
+    public function processfile($base64_string){
+        $_idfile = 0;
+        $path_relative = "";                                  
+            if($base64_string!=""){
+                $orfilename = "";
+                $dir = 'uploads/';
+                $data = explode( ',', $base64_string );
+                $mimeString = $data[0];
+                $mimeString = explode( ':', $mimeString);
+                $mimeString = explode( ';', $mimeString[1]);
+                $extension =  explode( '/', $mimeString[0]);
+                $data1 = $data[1];
+                $decoded = base64_decode($data1);   
+                $typefile = $extension[1];
+                $path = base_path($dir . date('Y') . '/'.date('m').'/'.date('d').'/');
+                $path_relative = $dir . date('Y') . '/'.date('m').'/'.date('d').'/';
+                if(!File::exists($path)) {
+                    File::makeDirectory($path, 0777, true, true);
+                }     
+                $filename = date('Ymd').'_'.time().'_'.uniqid().'.'.$typefile;
+                file_put_contents( $path.$filename , $decoded);
+                $errors = "";
+                try {
+                        $path_relative = $path_relative.$filename;
+                        $idinserteds = DB::select('call InsertFilesProcedure(?,?,?,?)',array($path_relative,$orfilename,$filename,$typefile));
+                        $idinserted = json_decode(json_encode($idinserteds), true);
+                        $_idfile = $idinserted[0]['idfile'];
+                        return $path_relative;
+                        //return response()->json(array('success' => true, 'id_inserted' => $idinserted ), 200);
+                    } catch (\Illuminate\Database\QueryException $ex) {
+                        $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
+                        return response()->json(array('error' => true, 'error' => $errors), 200);
+                    }
+        }
+        return $path_relative;
+    }
+    public function game(Request $request)
     {
 
         if (isset($_SERVER["HTTP_ORIGIN"]) === true) {
@@ -283,7 +402,7 @@ class svcustomerController extends Controller
                 header('Access-Control-Allow-Headers: Content-Type');
                 
                         $input = json_decode(file_get_contents('php://input'),true);
-                        $base64_string = $input['file'];       
+                            
                         $_namecat = $input['namecat'];
                         $_body = $input['body'];
                         $_typepost = $input['typepost'];
@@ -291,57 +410,29 @@ class svcustomerController extends Controller
                         $_mobile = $input['mobile'];
                         $_email = $input['email'];
                         $_address = $input['address'];
+                        $_job = $input['job'];
+                        $_birthday = $input['birthday'];
+                        $_facebook = $input['facebook'];
                         $_name_status_type = $input['name_status_type'];
+                        $file_canvas1 = $input['file_canvas1'];
+                        $file_canvas2 = $input['file_canvas2'];
+                        $file_canvas3 = $input['file_canvas3'];  
                         //if have exist file
                         $_idfile = 0;
-                        $path_relative = "";                                    
-                        if($base64_string!="nofile"){
-                                $orfilename = $input['orfilename'];
-                                $dir = 'uploads/';
-                                $data = explode( ',', $base64_string );
+                        $canvas1 = $this->processfile($file_canvas1);
+                        $canvas2 = $this->processfile($file_canvas2);
+                        $canvas3 = $this->processfile($file_canvas3);
+                        //return response()->json(array('success' => true, 'file_canvas1' => $canvas1,'file_canvas2'=>$canvas2,'file_canvas3'=>$canvas3), 200);
+                        //end if have file 
+                        $host = $request->getSchemeAndHttpHost();           
+                        $_body .= "<h5>Ảnh cận đứng</h5><p><img src='".$host.'/marketing/'.$canvas1."' /></p>";
+                        $_body .= "<h5>Ảnh cận ngồi</h5><p><img src='".$host.'/marketing/'.$canvas2."' /></p>";
+                        $_body .= "<h5>Ảnh cận vùng cơ thể</h5><p><img src='".$host.'/marketing/'.$canvas3."' /></p>";
+                        //file_canvas1:
 
-                                $mimeString = $data[0];
-
-                                $mimeString = explode( ':', $mimeString);
-
-                                $mimeString = explode( ';', $mimeString[1]);
-
-                                $extension =  explode( '/', $mimeString[0]);
-
-                                $data1 = $data[1];
-
-                                $decoded = base64_decode($data1);   
-
-                                $typefile = $extension[1];
-
-                                $path = base_path($dir . date('Y') . '/'.date('m').'/'.date('d').'/');
-
-                                $path_relative = $dir . date('Y') . '/'.date('m').'/'.date('d').'/';
-
-                                if(!File::exists($path)) {
-
-                                    File::makeDirectory($path, 0777, true, true);
-
-                                }     
-                                $filename = date('Ymd').'_'.time().'_'.uniqid().'.'.$typefile;
-                                file_put_contents( $path.$filename , $decoded);
-                                $errors = "";
-                                try {
-        					            $idinserteds = DB::select('call InsertFilesProcedure(?,?,?,?)',array($path_relative,$orfilename,$filename,$typefile));
-        					            $idinserted = json_decode(json_encode($idinserteds), true);
-        					            $_idfile = $idinserted[0]['idfile'];
-        					            //return response()->json(array('success' => true, 'id_inserted' => $idinserted ), 200);
-        					        } catch (\Illuminate\Database\QueryException $ex) {
-        					            $errors = new MessageBag(['errorlogin' => $ex->getMessage()]);
-        					            return response()->json(array('error' => true, 'error' => $errors), 200);
-        					        }
-                        }
-                        //end if have file                      
-                        // $svcustomer = new sv_customer(['firstname'=>$_fullname ,'lastname'=>'','email'=>$_email,'mobile'=>$_phone ,'address'=>$_address,'job'=>$_job,'note'=>$path_relative]);
-                        // $svcustomer->save();
-                        // return response()->json(array('success' => true, 'firstname' => $svcustomer->firstname), 200);
+                        //end file_canvas1
                          try {
-                                $idinserteds = DB::select('call CreatPostApiProcedure(?,?,?,?,?,?,?,?,?)',array($_namecat,$_body,$_typepost,$_idfile,$_firstname,$_mobile,$_email,$_address,$_name_status_type));
+                                $idinserteds = DB::select('call CreatPostApiProcedure(?,?,?,?,?,?,?,?,?,?,?,?)',array($_namecat,$_body,$_typepost,$_idfile,$_firstname,$_mobile,$_email,$_address,$_name_status_type,$_birthday, $_job, $_facebook));
                                 $idinserted = json_decode(json_encode($idinserteds), true);
                                 $id_imppost = $idinserted[0]['_id_imppost'];
                                 return response()->json(array('success' => true, 'id_inserted' => $id_imppost,'firstname'=>$_firstname), 200);

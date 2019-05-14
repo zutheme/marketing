@@ -126,7 +126,7 @@
             							<th>Điện thoại</th>
                           <th>Họ Tên</th>
                           <th>Email</th>
-                          <th>Nguồn</th>
+                          {{-- <th>Nguồn</th> --}}
                           <th>Chi nhánh</th>
             							<th>-</th>
             	         </tr>
@@ -137,7 +137,7 @@
                           <th>Điện thoại</th>
                           <th>Họ Tên</th>
                           <th>Email</th>
-                          <th>Nguồn</th>
+                          {{-- <th>Nguồn</th> --}}
                           <th>Chi nhánh</th>
                           <th>-</th>
                        </tr>
@@ -149,7 +149,7 @@
       								<td>{{ $row['mobile'] }}</td>
       								<td>{{ $row['firstname'] }}</td>
                       <td>{{ $row['email'] }}</td>
-                      <td>{{ $row['body'] }}</td>
+                     {{--  <td>{{ $row['body'] }}</td> --}}
                       <td>{{ $row['address_reg'] }}</td>
                       <td class="btn-control-action">
                         <input type="hidden" name="idpost_row" value="{{ $row['idpost'] }}">

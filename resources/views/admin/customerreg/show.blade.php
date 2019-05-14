@@ -59,6 +59,8 @@
                                   $email= $row['email'];
                                   $address = $row['address'];
                                   $job = $row['job'];
+                                  $birthday = $row['birthday'];
+                                  $facebook = $row['facebook'];
                             ?>
                           @endforeach
                         @endif
@@ -83,7 +85,7 @@
                       {{-- <div id="mainb" style="height:350px;"></div> --}}
                       <div class="detail-post">
                         @if(isset($post))
-                      	{{ $post }} 
+                      	 {!! $post !!}
                         @endif
                       </div>
                       <div>
@@ -174,9 +176,9 @@
                             <p class="title">Công việc</p>
                             <p>{{ $job }}</p>
                             <p class="title">Facebook</p>
-                            <p>{{ $job }}</p> 
-                            <p class="title">Zalo</p>
-                            <p>{{ $job }}</p>   
+                            <p>{{ $facebook }}</p> 
+                            <p class="title">Ngày sinh</p>
+                            <p>{{ $birthday }}</p>   
                           </div>
                           <br />
                           {{-- <h5>Project files</h5>

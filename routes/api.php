@@ -54,3 +54,4 @@ Route::post('svcustomers', 'API\svcustomerController@postcustomer');
 //Route::delete('svcustomers/{svcustomer}', 'API\svcustomerController@delete');
 
 Route::post('customer/consultant', 'API\svcustomerController@consultant');
+Route::post('customer/game', 'API\svcustomerController@game');
