@@ -425,9 +425,9 @@ class svcustomerController extends Controller
                         //return response()->json(array('success' => true, 'file_canvas1' => $canvas1,'file_canvas2'=>$canvas2,'file_canvas3'=>$canvas3), 200);
                         //end if have file 
                         $host = $request->getSchemeAndHttpHost();           
-                        $_body .= "<h5>Ảnh cận đứng</h5><p><img src='".$host.'/marketing/'.$canvas1."' /></p>";
-                        $_body .= "<h5>Ảnh cận ngồi</h5><p><img src='".$host.'/marketing/'.$canvas2."' /></p>";
-                        $_body .= "<h5>Ảnh cận vùng cơ thể</h5><p><img src='".$host.'/marketing/'.$canvas3."' /></p>";
+                        $_body .= "<div class='image-game'><p><img src='".$host.'/marketing/'.$canvas1."' /></p><h5>Ảnh cận đứng</h5>";
+                        $_body .= "<p><img src='".$host.'/marketing/'.$canvas2."' /></p><h5>Ảnh cận ngồi</h5>";
+                        $_body .= "<p><img src='".$host.'/marketing/'.$canvas3."' /><h5>Ảnh cận vùng cơ thể</h5></p></div>";
                         //file_canvas1:
 
                         //end file_canvas1

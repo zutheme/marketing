@@ -17,7 +17,7 @@
     <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
       <!-- Custom Theme Style -->
     <link href="{{ asset('dashboard/build/css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.5') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/production/css/custom.css?v=0.1.7') }}" rel="stylesheet">
 @stop
 @section('content')
    <!-- page content --> 

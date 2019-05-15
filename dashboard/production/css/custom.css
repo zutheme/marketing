@@ -281,3 +281,18 @@ ul.messages li .message_wrapper.comment {
     right: 2px;
     top: -8px;
 }
+.x_content .detail-post h4 {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+}
+.x_content .detail-post p {
+    font-weight: 300;
+    color: #333;
+    font-size: 14px;
+}
+.x_content .detail-post .image-game {
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
